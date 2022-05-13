@@ -7,9 +7,10 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
-    "core-js": "^3.8.3",
+    "core-js": "^2.6.12",
     "element-ui": "^2.15.8",
-    "vue": "^2.5.17"
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.2.0",

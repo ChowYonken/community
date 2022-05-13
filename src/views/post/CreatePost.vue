@@ -1,5 +1,7 @@
 <template>
-  发布帖子
+  <div id="create">
+    <h2>发布帖子</h2>
+  </div>
 </template>
 
 <script>

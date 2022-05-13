@@ -1,52 +1,51 @@
 <template>
-  <el-form :model="ruleForm" status-icon :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
-    <el-form-item label="密码" prop="pass">
-      <el-input type="password" v-model="ruleForm.pass" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item label="确认密码" prop="checkPass">
-      <el-input type="password" v-model="ruleForm.checkPass" autocomplete="off"></el-input>
-    </el-form-item>
-    <el-form-item label="年龄" prop="age">
-      <el-input v-model.number="ruleForm.age"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
-      <el-button @click="resetForm('ruleForm')">重置</el-button>
-    </el-form-item>
-  </el-form>
+  <div id="register">
+    <el-card class="box-card">
+      <div slot="header" class="clearfix">
+        新用户入驻
+      </div>
+      <div>
+        <el-form
+          ref="ruleForm"
+          :model="ruleForm"
+          status-icon
+          :rules="rules"
+          label-width="100px"
+          class="demo-ruleForm">
+          <!-- 邮箱表单域-->
+          <el-form-item label="邮箱" prop="email">
+            <el-input v-model="ruleForm.email" />
+          </el-form-item>
+          <!-- 密码表单域-->
+          <el-form-item label="密码" prop="pass">
+            <el-input
+              v-model="ruleForm.pass"
+              type="password"
+              autocomplete="off"/>
+          </el-form-item>
+          <!-- 确认密码表单域-->
+          <el-form-item label="确认密码" prop="checkPass">
+            <el-input
+              v-model="ruleForm.checkPass"
+              type="password"
+              autocomplete="off"/>
+          </el-form-item>
+          <!-- 注册，重置 按钮表单域-->
+          <el-form-item>
+            <el-button type="primary" @click="submitForm('ruleForm')">立即注册</el-button>
+            <el-button @click="resetForm('ruleForm')">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </div>
+    </el-card>
+  </div>
 </template>
 
 <script>
   export default {
     name: "Register",
     data() {
-      var checkAge = (rule, value, callback) => {
-        if (!value) {
-          return callback(new Error('年龄不能为空'));
-        }
-        setTimeout(() => {
-          if (!Number.isInteger(value)) {
-            callback(new Error('请输入数字值'));
-          } else {
-            if (value < 18) {
-              callback(new Error('必须年满18岁'));
-            } else {
-              callback();
-            }
-          }
-        }, 1000);
-      };
       var validatePass = (rule, value, callback) => {
-        if (value === '') {
-          callback(new Error('请输入密码'));
-        } else {
-          if (this.ruleForm.checkPass !== '') {
-            this.$refs.ruleForm.validateField('checkPass');
-          }
-          callback();
-        }
-      };
-      var validatePass2 = (rule, value, callback) => {
         if (value === '') {
           callback(new Error('请再次输入密码'));
         } else if (value !== this.ruleForm.pass) {
@@ -56,42 +55,68 @@
         }
       };
       return {
+        loading: false,
+        // 表单数据对象
         ruleForm: {
+          email: '',
           pass: '',
-          checkPass: '',
-          age: ''
+          checkPass:''
         },
         rules: {
+          email: [
+            // required 是否必填
+            { required: true, message: '请输入邮箱地址', trigger: 'blur' },
+            {
+              type: 'email',
+              message: '请输入正确的邮箱地址',
+              trigger: ['blur', 'change']
+            }
+          ],
           pass: [
-            { validator: validatePass, trigger: 'blur' }
+            { required: true, message: '请输入密码', trigger: 'blur' },
+            {
+              min: 6,
+              max: 20,
+              message: '长度在 6 到 20 个字符',
+              trigger: 'blur'
+            }
           ],
           checkPass: [
-            { validator: validatePass2, trigger: 'blur' }
-          ],
-          age: [
-            { validator: checkAge, trigger: 'blur' }
+            { required: true, message: '请再次输入密码', trigger: 'blur' },
+            { validator: validatePass, trigger: 'blur' }
           ]
         }
-      };
+      }
     },
     methods: {
+      // 注册的点击事件
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            alert('submit!');
+            this.$message({
+              type: "success",
+              message: '注册成功'
+            })
           } else {
             console.log('error submit!!');
             return false;
           }
         });
       },
+      // 重置的点击事件
       resetForm(formName) {
-        this.$refs[formName].resetFields();
+        this.$refs[formName].resetFields()
       }
     }
   }
 </script>
 
 <style scoped>
+  #register {
+    width: 450px;
+    margin: 50px auto;
+    border-radius: 10px;
+    box-shadow: 0 0 4px #cac6c6;
+  }
 
 </style>

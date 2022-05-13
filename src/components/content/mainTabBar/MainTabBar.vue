@@ -1,27 +1,30 @@
 <template>
-  <el-container>
-    <el-header>
-      <el-menu :default-active="activeIndex"
-               class="el-menu-demo"
-               mode="horizontal"
-               @select="handleSelect"
-               active-text-color="#9393FF">
-        <el-menu-item index="1" class="first-page">alibb社区</el-menu-item>
-        <el-menu-item class="search">
-          <el-form :inline="true" :model="formInline" class="demo-form-inline">
-            <el-form-item>
-              <el-input v-model="formInline.user" placeholder="审批人"></el-input>
-            </el-form-item>
-            <el-form-item>
-              <el-button type="primary" @click="onSubmit">查询</el-button>
-            </el-form-item>
-          </el-form>
-        </el-menu-item>
-
-      </el-menu>
-    </el-header>
-  </el-container>
-
+  <el-menu
+    :default-active="activeIndex2"
+    class="el-menu-demo"
+    mode="horizontal"
+    @select="handleSelect"
+    background-color="#fff"
+    text-color="#000"
+    active-text-color="#9393FF"
+    :router="true">
+    <el-menu-item index="/home">
+      <i class="el-icon-sunny"></i>
+      alibb社区
+    </el-menu-item>
+    <el-menu-item>
+      <el-form :inline="true" :model="formInline" class="demo-form-inline">
+        <el-form-item label="审批人">
+          <el-input v-model="formInline.user" placeholder="审批人"></el-input>
+        </el-form-item>
+        <el-form-item>
+          <el-button type="primary" @click="onSubmit">查询</el-button>
+        </el-form-item>
+      </el-form>
+    </el-menu-item>
+    <el-menu-item index="/register" class="register">注册</el-menu-item>
+    <el-menu-item index="/login" class="login">登录</el-menu-item>
+  </el-menu>
 </template>
 
 <script>
@@ -50,33 +53,8 @@
 </script>
 
 <style scoped>
-  ul {
-    float: left;
-    text-align: center;
+  .el-menu--horizontal>.el-menu-item .login,
+  .el-menu--horizontal>.el-menu-item .register {
+    float: right;
   }
-
-  ul .first-page {
-  }
-
-  ul .search {
-    margin-left: 20px;
-  }
-
-  .el-input.is-active .el-input__inner, .el-input__inner:focus {
-    border-color: #9393FF!important;
-    outline: 0!important;
-  }
-
-  .el-button--primary {
-    margin-left: 20px;
-    height: 40px;
-    color: #FFF;
-    background-color: #9393FF;
-    border-color: #9393FF;
-  }
-
-  .el-menu.el-menu--horizontal {
-    border: none;
-  }
-
 </style>

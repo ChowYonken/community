@@ -1,5 +1,7 @@
 <template>
-  开源社区首页
+  <div id="community">
+    <h2>开源社区首页</h2>
+  </div>
 </template>
 
 <script>

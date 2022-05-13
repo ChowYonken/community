@@ -1,5 +1,7 @@
 <template>
-  个人主页
+  <div id="profile">
+    <h2>个人主页</h2>
+  </div>
 </template>
 
 <script>

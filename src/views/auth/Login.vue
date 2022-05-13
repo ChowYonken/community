@@ -1,5 +1,9 @@
 <template>
-登录页面
+  <div id="login" class="columns">
+    <div class="">
+
+    </div>
+  </div>
 </template>
 
 <script>

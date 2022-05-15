@@ -1,3 +1,8 @@
+<!--
+ * @Description: 注册组件
+ * @Author: chowyonken
+ * @Date: 2022-05-13
+ -->
 <template>
   <div id="register">
     <el-card class="box-card">

@@ -1,34 +1,31 @@
 <template>
   <div id="register">
     <el-card class="box-card">
-      <div slot="header" class="clearfix">
+      <div slot="header" class="clearfix title">
         新用户入驻
       </div>
       <div>
-        <el-form
-          ref="ruleForm"
-          :model="ruleForm"
-          status-icon
-          :rules="rules"
-          label-width="100px"
-          class="demo-ruleForm">
+        <el-form ref="ruleForm"
+                 :model="ruleForm"
+                 status-icon
+                 :rules="rules"
+                 label-width="100px"
+                 class="demo-ruleForm">
           <!-- 邮箱表单域-->
           <el-form-item label="邮箱" prop="email">
             <el-input v-model="ruleForm.email" />
           </el-form-item>
           <!-- 密码表单域-->
           <el-form-item label="密码" prop="pass">
-            <el-input
-              v-model="ruleForm.pass"
-              type="password"
-              autocomplete="off"/>
+            <el-input v-model="ruleForm.pass"
+                      type="password"
+                      autocomplete="off"/>
           </el-form-item>
           <!-- 确认密码表单域-->
           <el-form-item label="确认密码" prop="checkPass">
-            <el-input
-              v-model="ruleForm.checkPass"
-              type="password"
-              autocomplete="off"/>
+            <el-input v-model="ruleForm.checkPass"
+                      type="password"
+                      autocomplete="off"/>
           </el-form-item>
           <!-- 注册，重置 按钮表单域-->
           <el-form-item>
@@ -55,7 +52,6 @@
         }
       };
       return {
-        loading: false,
         // 表单数据对象
         ruleForm: {
           email: '',
@@ -112,6 +108,10 @@
 </script>
 
 <style scoped>
+  .title {
+    text-align: center;
+  }
+
   #register {
     width: 450px;
     margin: 50px auto;

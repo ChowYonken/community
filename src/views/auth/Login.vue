@@ -32,7 +32,7 @@
           </el-form-item>
           <!-- 登录，重置 按钮表单域-->
           <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')">立即登录</el-button>
+            <el-button type="primary" @click="goToLogin">立即登录</el-button>
             <el-button @click="resetForm('ruleForm')">重置</el-button>
           </el-form-item>
         </el-form>
@@ -74,7 +74,28 @@
       }
     },
     methods: {
-      // 注册的点击事件
+      //固定的账户密码判断实现简单的登录跳转功能，只能测试用
+      goToLogin() {
+        this.$refs["ruleForm"].validate((valid) => {
+          if (valid) {
+            if (
+              this.ruleForm.email != "kk@163.com" ||
+              this.ruleForm.pass != "123456"
+            ) {
+              this.$message.error("账号密码不正确");
+              return false;
+            } else {
+              this.$message({ message: "登陆成功", type: "success" });
+              // console.log('--登录成功--')
+              this.$router.push("/profile");
+            }
+          } else {
+            this.$message.error("登陆失败");
+            return false;
+          }
+        });
+      },
+      // 登录的点击事件
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {

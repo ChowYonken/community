@@ -5,20 +5,18 @@
  -->
 <template>
   <div id="app">
-    <el-container>
-      <!--顶栏容器-->
-      <el-header>
-        <main-tab-bar/>
-      </el-header>
-      <!--内容区域-->
-      <el-main>
-        <router-view/>
-      </el-main>
-      <!--底部容器-->
-      <el-footer>
-
-      </el-footer>
-    </el-container>
+  <!--导航栏-->
+    <header>
+      <main-tab-bar/>
+    </header>
+    <!--内容-->
+    <main>
+      <router-view/>
+    </main>
+    <!--尾部-->
+    <footer>
+      ul>li{$}*1000
+    </footer>
   </div>
 </template>
 
@@ -36,4 +34,9 @@
 
 <style>
   @import "./assets/css/base.css";
+
+  main {
+    margin-top: 120px;
+  }
+
 </style>

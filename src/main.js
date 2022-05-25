@@ -7,6 +7,8 @@ import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 // 引入vue-router库
 import Router from 'vue-router'
+// 引入iconfont库
+import "./assets/css/iconcss/iconfont.css";
 
 Vue.config.productionTip = false
 

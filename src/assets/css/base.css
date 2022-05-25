@@ -4,7 +4,7 @@
     --color-text: #666;
     --color-high-text: #ff5777;
     --color-tint: #ff8198;
-    --color-background: #fff;
+    --color-background: #f5f5f5;
     --font-size: 14px;
     --line-height: 1.5;
 }
@@ -53,7 +53,7 @@ a {
 .right {
     float: right;
 }
-/背景图/
+/*背景图*/
 @media (min-width: 768px) {
   .container {
     width: 760px;

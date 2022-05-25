@@ -2,50 +2,55 @@
  * @Description: 导航栏组件
  * @Author: chowyonken
  * @Date: 2022-05-15
+ * @update: 2022-05-25
  -->
 <template>
-  <el-menu :default-active="activeIndex"
-           class="el-menu-demo"
-           mode="horizontal"
-           active-text-color="#409eff"
-           router>
+  <div id="header">
+    <!--logo-->
     <div class="logo">
-        <img src="@/assets/img/logo.png" alt />
+      <router-link to="/home"><img src="@/assets/img/logo.png" alt=""></router-link>
     </div>
-    <!--首页-->
-    <div class="homePage">
-      <el-menu-item index="/home">首页</el-menu-item>
-    </div>
-
-    <!--搜索框-->
+    <!--搜索-->
     <div class="search">
       <el-input placeholder="请输入搜索内容">
         <el-button slot="append" icon="el-icon-search"></el-button>
       </el-input>
     </div>
-    <!--个人中心-->
-    <div class="userCenter">
-      <el-menu-item index="/login">个人中心</el-menu-item>
+    <!--未登录-->
+    <div class="user-to-login" v-if="isShowLogin">
+      <div class="login" @click="toLogin">
+        <router-link to="/login">
+          <span>登录</span>
+        </router-link>
+      </div>
+      <div class="register">
+        <router-link to="/register">
+          <span>注册</span>
+        </router-link>
+      </div>
     </div>
-    <!--未登录时-->
-    <el-menu-item class="auth" v-if="isShowLogin">
-      <el-button type="text" @click="toLogin">登录</el-button>
-      <span class="sep">|</span>
-      <el-button type="text" @click="toRegister">注册</el-button>
-    </el-menu-item>
-    <!--已登录-->
+    <!--用户 已登录-->
     <div class="user" v-else>
-      <i class="el-icon-s-custom"></i>
-      <el-popover placement="top" width="180" v-model="visible">
-        <p>确定退出登录吗？</p>
-        <div style="text-align: right; margin: 10px 0 0">
-          <el-button size="mini" type="text" @click="visible = false">取消</el-button>
-          <el-button type="primary" size="mini" @click="logout">确定</el-button>
-        </div>
-        <el-button type="text" slot="reference">kk</el-button>
-      </el-popover>
+      <div class="user-login">
+        <el-dropdown>
+          <span class="el-dropdown-link touxiang">
+            <img src="@/assets/img/touxiang.jpg" alt="">
+          </span>
+          <el-dropdown-menu slot="dropdown">
+            <div @click="toProfile"><el-dropdown-item><i class="iconfont icon-shouye"></i>个人主页</el-dropdown-item></div>
+            <div @click="logout"><el-dropdown-item ><i class="iconfont icon-tuichu"></i>退出</el-dropdown-item></div>
+          </el-dropdown-menu>
+        </el-dropdown>
+      </div>
+      <div class="user-msg">
+        <router-link to="/login">
+          <span><i class="iconfont icon-rcd-mail"></i>消息</span>
+        </router-link>
+      </div>
     </div>
-  </el-menu>
+
+  </div>
+
 </template>
 
 <script>
@@ -73,8 +78,13 @@
         });
 
       },
+      // 跳转注册页面
       toRegister() {
         this.$router.push('./register')
+      },
+      // 跳转个人主页
+      toProfile() {
+        this.$router.push('./profile')
       },
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
@@ -87,42 +97,76 @@
 </script>
 
 <style scoped>
-  /* 顶部导航栏CSS */
-  .el-header .el-menu {
-    max-width: 1225px;
-    margin: 0 auto;
+  #header {
+    display: flex;
+    position: fixed;
+    top: 0px;
+    width: 100%;
+    height: 80px;
+    padding: 0 20px;
+    background-color: white;
+    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+    z-index: 100;
   }
 
-  .el-header .logo {
-    height: 60px;
-    width: 189px;
-    float: left;
-    margin-right: 100px;
+  #header .logo {
+    flex: 1;
+    max-width: 155px;
+    margin: 20px 135px;
   }
 
-  .el-header .homePage {
-    float: left;
-
+  #header .search {
+    flex: 1;
+    margin: 20px 100px;
+    max-width: 400px;
   }
 
-  .el-header .search {
-    margin-top: 10px;
-    margin-left: 30px;
-    width: 300px;
-    float: left;
+  #header .user {
+    flex: 1;
+    display: flex;
   }
 
-  .el-header .auth {
-    float: right;
+  #header .user-login {
+    width: 270px;
   }
 
-  .el-header .user {
-    float: right;
-    margin: 10px 10px;
+  /deep/ .el-dropdown {
+    width: 100%;
   }
 
-  .el-header .userCenter {
-    float: right;
+  #header .user-msg span {
+    display: inline-block;
+    color: #222226;
+    line-height: 75px;
   }
-  /* 顶部导航栏CSS END */
+
+  #header .user .touxiang {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 1px solid #DCDCDC;
+    border-radius: 50%;
+    margin: 14px 157px 10px;
+    overflow: hidden;
+  }
+
+  .user .touxiang img {
+    width: 100%;
+    height: 100%;
+  }
+
+  .user-to-login {
+    display: flex;
+    padding: 0 20px 0 150px;
+  }
+
+  .user-to-login .login {
+    color: #222226;
+    margin: 0 20px;
+  }
+
+  .user-to-login span {
+    color: #222226;
+    line-height: 75px;
+  }
 </style>

@@ -8,6 +8,7 @@ const Login = () => import('@/views/auth/Login')
 const Register = () => import('@/views/auth/Register')
 const CreatePost = () => import('@/views/post/CreatePost')
 const Profile = () => import('@/views/profile/ProfilePage')
+const Topic = () => import('@/views/topic/Topic')
 
 Vue.use(Router)
 
@@ -42,14 +43,38 @@ const routes = [
     path: '/post',
     component: CreatePost
   },
+  // 个人主页
   {
     path: '/profile',
     component: Profile
+  },
+  // 话题
+  {
+    path: '/topic',
+    component: Topic
   }
 ]
 
-export default new Router({
+const router = new Router({
   routes,
   mode: 'history'
 })
 
+export default router
+
+// 导航守卫
+// 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
+// router.beforeEach((to, from, next) => {
+//   if (to.path === '/home') {
+//     next();
+//   } else {
+//     // 从本地获取token
+//     let token = localStorage.getItem('token');
+//     // 判断token是否为空如果为空则跳转到登录页 如果有则放行
+//     if (token === null || token === '') {
+//       next({path:'/home'});
+//     } else {
+//       next();
+//     }
+//   }
+// })

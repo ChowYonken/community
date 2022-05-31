@@ -6,6 +6,62 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "1447787",
+      "name": "私信",
+      "font_class": "sixin",
+      "unicode": "e62c",
+      "unicode_decimal": 58924
+    },
+    {
+      "icon_id": "11391552",
+      "name": "私信",
+      "font_class": "sixin1",
+      "unicode": "e639",
+      "unicode_decimal": 58937
+    },
+    {
+      "icon_id": "3865691",
+      "name": "娱乐",
+      "font_class": "yule",
+      "unicode": "e60a",
+      "unicode_decimal": 58890
+    },
+    {
+      "icon_id": "3904070",
+      "name": "音乐",
+      "font_class": "yinle",
+      "unicode": "e60b",
+      "unicode_decimal": 58891
+    },
+    {
+      "icon_id": "6500757",
+      "name": "首页",
+      "font_class": "shouye1",
+      "unicode": "e618",
+      "unicode_decimal": 58904
+    },
+    {
+      "icon_id": "14292440",
+      "name": "综艺",
+      "font_class": "zongyi",
+      "unicode": "e600",
+      "unicode_decimal": 58880
+    },
+    {
+      "icon_id": "23949541",
+      "name": "影视",
+      "font_class": "yingshi",
+      "unicode": "ec69",
+      "unicode_decimal": 60521
+    },
+    {
+      "icon_id": "834249",
+      "name": "回到顶部",
+      "font_class": "huidaodingbu",
+      "unicode": "e619",
+      "unicode_decimal": 58905
+    },
+    {
       "icon_id": "10273331",
       "name": "退出",
       "font_class": "tuichu",

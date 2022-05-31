@@ -15,19 +15,25 @@
     </main>
     <!--尾部-->
     <footer>
-      ul>li{$}*1000
+      <footer-bar/>
     </footer>
+    <!--回到顶部-->
+    <back-top></back-top>
   </div>
 </template>
 
 <script>
 
   import MainTabBar from "@/components/content/mainTabBar/MainTabBar";
+  import FooterBar from "@/components/content/footer/FooterBar";
+  import BackTop from "@/components/content/backTop/BackTop";
 
   export default {
     name: 'App',
     components: {
-      MainTabBar
+      MainTabBar,
+      FooterBar,
+      BackTop
     }
   }
 </script>

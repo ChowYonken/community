@@ -2,6 +2,7 @@
  * @Description: 登录组件
  * @Author: chowyonken
  * @Date: 2022-05-18
+ * @update: 2022-5-25
  -->
 <template>
   <div id="community">

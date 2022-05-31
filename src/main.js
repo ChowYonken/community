@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
+import store from './store'
+
 // 引入element-ui库
 import ElementUI from 'element-ui';
 // 引入element-ui样式
@@ -9,6 +11,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import Router from 'vue-router'
 // 引入iconfont库
 import "./assets/css/iconcss/iconfont.css";
+import './assets/css/iconcss/iconfont.js'
 
 Vue.config.productionTip = false
 
@@ -26,5 +29,6 @@ Vue.use(ElementUI);
 new Vue({
   el: '#app',
   router,
+  store,
   render: h => h(App)
 })

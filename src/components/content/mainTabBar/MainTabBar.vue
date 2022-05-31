@@ -17,7 +17,7 @@
       </el-input>
     </div>
     <!--未登录-->
-    <div class="user-to-login" v-if="isShowLogin">
+    <div class="user-to-login" v-if="this.$store.getters.getLocalStorage == null || this.$store.getters.getLocalStorage === ''">
       <div class="login" @click="toLogin">
         <router-link to="/login">
           <span>登录</span>
@@ -31,6 +31,18 @@
     </div>
     <!--用户 已登录-->
     <div class="user" v-else>
+      <div class="user-msg">
+        <router-link to="/login">
+          <i class="iconfont icon-rcd-dialogue"></i>
+          <span>私信</span>
+        </router-link>
+      </div>
+      <div class="user-tongzhi">
+        <router-link to="/login">
+          <i class="iconfont icon-sixin1"></i>
+          <span>通知</span>
+        </router-link>
+      </div>
       <div class="user-login">
         <el-dropdown>
           <span class="el-dropdown-link touxiang">
@@ -42,13 +54,7 @@
           </el-dropdown-menu>
         </el-dropdown>
       </div>
-      <div class="user-msg">
-        <router-link to="/login">
-          <span><i class="iconfont icon-rcd-mail"></i>消息</span>
-        </router-link>
-      </div>
     </div>
-
   </div>
 
 </template>
@@ -58,20 +64,22 @@
     name: "MainTabBar",
     data() {
       return {
-        activeIndex: '',
-        isShowLogin: false, // 是否显示登录注册按钮
-        visible: false // 是否退出登录
+        activeIndex: ''
       };
     },
     methods: {
       // 跳转登录页面
       toLogin() {
         this.$router.push('./login')
+        console.log(this.$store.state.token)
       },
       // 退出登录
       logout() {
-        this.isShowLogin = true
-        this.$notify({
+        //退出登录，清空token
+        this.$store.commit('removeToken');
+        this.$router.push('/home');
+        location.reload(); // 刷新当前页面
+        this.$message({
           title: '成功',
           message: '成功退出登录',
           type: 'success'
@@ -85,12 +93,6 @@
       // 跳转个人主页
       toProfile() {
         this.$router.push('./profile')
-      },
-      handleSelect(key, keyPath) {
-        console.log(key, keyPath);
-      },
-      onSubmit() {
-        console.log('submit!');
       }
     }
   }
@@ -127,17 +129,31 @@
   }
 
   #header .user-login {
-    width: 270px;
+    width: 270px!important;
   }
 
   /deep/ .el-dropdown {
     width: 100%;
   }
 
-  #header .user-msg span {
+  #header .user-msg,
+  .user-tongzhi {
+    width: 58px;
+    margin-left: 30px;
+  }
+
+  /deep/ .el-dropdown {
+    width: 165px!important;
+  }
+
+  #header .user-msg span,
+  .user-tongzhi span{
     display: inline-block;
+    font-size: 18px;
     color: #222226;
-    line-height: 75px;
+    line-height: 80px;
+    vertical-align: 1px;
+    margin-left: 2px;
   }
 
   #header .user .touxiang {
@@ -146,13 +162,15 @@
     height: 50px;
     border: 1px solid #DCDCDC;
     border-radius: 50%;
-    margin: 14px 157px 10px;
+    margin: 14px 55px 10px;
     overflow: hidden;
   }
 
   .user .touxiang img {
+    display: inline-block;
     width: 100%;
     height: 100%;
+    margin-right: 100px;
   }
 
   .user-to-login {
@@ -168,5 +186,11 @@
   .user-to-login span {
     color: #222226;
     line-height: 75px;
+  }
+
+  .iconfont {
+    font-size: 20px;
+    color: #222226;
+    font-weight: 700;
   }
 </style>

@@ -30,14 +30,9 @@
                       autocomplete="off"
                       placeholder="请输入密码"/>
           </el-form-item>
-          <!--记住账号密码-->
-<!--          <el-form-item label="记住" prop="delivery">-->
-<!--            <el-switch v-model="ruleForm.rememberMe"></el-switch>-->
-<!--          </el-form-item>-->
           <!-- 登录，重置 按钮表单域-->
           <el-form-item>
-            <el-button type="primary" @click="goToLogin">立即登录</el-button>
-<!--            <el-button @click="resetForm('ruleForm')">重置</el-button>-->
+            <el-button type="primary" @click="login">立即登录</el-button>
           </el-form-item>
           <el-form-item>
             <div class="last">
@@ -54,6 +49,9 @@
 </template>
 
 <script>
+
+  import {LoginPostData} from '@/network/api/login';
+
   export default {
     name: "Login",
     data() {
@@ -76,54 +74,36 @@
           pass: [
             { required: true, message: '请输入密码', trigger: 'blur' },
             {
-              min: 6,
+              min: 2,
               max: 20,
               message: '长度在 6 到 20 个字符',
               trigger: 'blur'
             }
           ]
-        }
+        },
+        userToken: '', // 用于存储从后台获取的token
       }
     },
     methods: {
-      //固定的账户密码判断实现简单的登录跳转功能，只能测试用
-      goToLogin() {
-        this.$refs["ruleForm"].validate((valid) => {
-          if (valid) {
-            if (
-              this.ruleForm.email != "kk@163.com" ||
-              this.ruleForm.pass != "123456"
-            ) {
-              this.$message.error("账号密码不正确");
-              return false;
-            } else {
-              this.$message({ message: "登陆成功", type: "success" });
-              // console.log('--登录成功--')
-              this.$router.push("/profile");
-            }
-          } else {
-            this.$message.error("登陆失败");
-            return false;
-          }
-        });
-      },
-      // 登录的点击事件
-      submitForm(formName) {
-        this.$refs[formName].validate((valid) => {
-          if (valid) {
-            this.$message({
-              type: "success",
-              message: '登录成功'
-            })
-          } else {
-            console.log('error submit!!');
-            return false;
-          }
-        });
-      },
-      // 重置的点击事件
-      resetForm(formName) {
-        this.$refs[formName].resetFields()
+      // 登录点击事件
+      login() {
+        // 登录接口
+        LoginPostData(this.ruleForm.email,this.ruleForm.pass)
+        .then((res) => {
+          console.log(res)
+          // 将token存到userToken中
+          this.userToken = res.data.data
+          this.$store.commit('setToken', this.userToken);
+          // 将token本地存储到回话中
+          this.$router.push('/home')
+          this.$message({
+            message: '恭喜你，登录成功',
+            type: 'success'
+          });
+        })
+        .catch(err => {
+          console.log(err)
+        })
       }
     }
   }

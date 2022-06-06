@@ -60,6 +60,8 @@
 </template>
 
 <script>
+  import {LogoutPostData} from "@/network/api/login";
+
   export default {
     name: "MainTabBar",
     data() {
@@ -71,20 +73,25 @@
       // 跳转登录页面
       toLogin() {
         this.$router.push('./login')
-        console.log(this.$store.state.token)
       },
       // 退出登录
       logout() {
-        //退出登录，清空token
-        this.$store.commit('removeToken');
-        this.$router.push('/home');
-        location.reload(); // 刷新当前页面
-        this.$message({
-          title: '成功',
-          message: '成功退出登录',
-          type: 'success'
-        });
-
+        LogoutPostData(this.$store.getters.getLocalStorage)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+        // 退出登录，清空token
+        // this.$store.commit('removeToken');
+        // this.$router.push('/home');
+        // location.reload(); // 刷新当前页面
+        // this.$message({
+        //   title: '成功',
+        //   message: '成功退出登录',
+        //   type: 'success'
+        // });
       },
       // 跳转注册页面
       toRegister() {

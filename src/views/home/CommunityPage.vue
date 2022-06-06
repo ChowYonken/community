@@ -17,7 +17,7 @@
 
 <script>
 
-  import Category from "@/views/home/childComponent/Category";
+  import Category from "@/components/content/category/Category";
   import PostView from "@/views/home/childComponent/PostView";
   import Create from "@/views/home/childComponent/Create";
 

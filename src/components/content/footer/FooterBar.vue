@@ -7,10 +7,12 @@
 <template>
   <div id="footer-bar">
     <div class="content">
+      <!--版权-->
       <div class="copyright">
         <span>©2022 alibb ALL RIGHTS RESERVED</span>
         <span>联系我们：chowyonken@163.com / 18026553956</span>
       </div>
+      <!--微信二维码-->
       <div class="wechat">
         <img src="@/assets/img/wechat.jpg" alt="">
       </div>
@@ -32,8 +34,12 @@
     margin-top: 120px;
   }
 
+  .content {
+    display: flex;
+  }
+
   .content .copyright {
-    float: left;
+    flex: 1;
     margin-left: 300px;
     margin-top: 50px;
   }
@@ -44,8 +50,8 @@
   }
 
   .content .wechat {
-    float: right;
-    margin-right: 250px;
+    flex: 1;
+    margin-left: 425px;
     margin-top: 25px;
   }
 

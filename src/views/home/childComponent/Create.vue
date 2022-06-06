@@ -135,4 +135,12 @@
   .hot-search .hot-search-item .hot-index {
     margin-right: 13px;
   }
+
+  .content a {
+    color: #191c22;
+  }
+
+  .content a:hover .hot-title{
+    color: #409EFF;
+  }
 </style>

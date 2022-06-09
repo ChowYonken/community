@@ -26,7 +26,7 @@
 
   import MainTabBar from "@/components/content/mainTabBar/MainTabBar";
   import FooterBar from "@/components/content/footer/FooterBar";
-  import BackTop from "@/components/content/backTop/BackTop";
+  import BackTop from "@/components/common/backTop/BackTop";
 
   export default {
     name: 'App',
@@ -40,6 +40,7 @@
 
 <style>
   @import "./assets/css/base.css";
+  @import "./assets/css/wangeditor/style.css";
 
   main {
     margin-top: 120px;

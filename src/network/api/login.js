@@ -15,9 +15,9 @@ export function LoginPostData(email,password) {
 // post接口(登出)
 export function LogoutPostData(Token) {
   return request({
-    headers: {
-      'Authorization': 'Bearer ${Token}'
-    },
+    // headers: {
+    //   'Authorization': 'Bearer ${Token}'
+    // },
     url: '/signOut',
     method: 'get',
     // data: {

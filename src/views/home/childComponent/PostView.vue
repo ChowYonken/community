@@ -4,80 +4,12 @@
       <el-tab-pane label="最新主题" name="latest">
         <!--循环遍历后台的数据-->
         <article>
-          <div class="text-list-model">
-            <div class="list-item-wrap">
-              <div class="list-item">
-                <!--帖子标题-->
-                <div class="info">
-                  <router-link to="/detail">
-                    <span class="title">金州勇士，天道酬勤：合计98岁的库里克雷追梦，八年六总决赛</span>
-                  </router-link>
-                  <span>50赞</span>
-                  <span>744回复</span>
-                </div>
-                <!--帖子分类-->
-                <div class="lable">
-                  <router-link to="/topic">
-                    <span>娱乐圈</span>
-                  </router-link>
-                </div>
-              </div>
-            </div>
-            <div class="list-item-wrap">
-              <div class="list-item">
-                <div class="info">
-                  <router-link to="/detail">
-                    <span class="title">金州勇士，天道酬勤：合计98岁的库里克雷追梦，八年六总决赛111111111111111111</span>
-                  </router-link>
-                  <span>50赞</span>
-                  <span>744回复</span>
-                </div>
-                <div class="lable">
-                  <router-link to="/topic">
-                    <span>娱乐圈</span>
-                  </router-link>
-                </div>
-              </div>
-            </div>
-          </div>
+          <post-list/>
         </article>
       </el-tab-pane>
       <el-tab-pane label="最热主题" name="hot">
         <article>
-          <div class="text-list-model">
-            <div class="list-item-wrap">
-              <div class="list-item">
-                <div class="info">
-                  <router-link to="/detail">
-                    <span class="title">威金斯：我感觉到有点儿累，但比赛所释放的肾上腺素帮助我度过难关</span>
-                  </router-link>
-                  <span>50赞</span>
-                  <span>744回复</span>
-                </div>
-                <div class="lable">
-                  <router-link to="/topic">
-                    <span>娱乐圈</span>
-                  </router-link>
-                </div>
-              </div>
-            </div>
-            <div class="list-item-wrap">
-              <div class="list-item">
-                <div class="info">
-                  <router-link to="/detail">
-                    <span class="title">金州勇士，天道酬勤：合计98岁的库里克雷追梦，八年六总决赛111111111111111111</span>
-                  </router-link>
-                  <span>50赞</span>
-                  <span>744回复</span>
-                </div>
-                <div class="lable">
-                  <router-link to="/topic">
-                    <span>娱乐圈</span>
-                  </router-link>
-                </div>
-              </div>
-            </div>
-          </div>
+          <post-list/>
         </article>
       </el-tab-pane>
     </el-tabs>
@@ -85,8 +17,14 @@
 </template>
 
 <script>
+
+  import PostList from "@/components/content/postList/PostList";
+
   export default {
     name: "PostView",
+    components: {
+      PostList
+    },
     data() {
       return {
         activeName: 'latest'

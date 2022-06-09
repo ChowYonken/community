@@ -79,19 +79,19 @@
         LogoutPostData(this.$store.getters.getLocalStorage)
         .then(res => {
           console.log(res)
+          // 退出登录，清空token
+          this.$store.commit('removeToken');
+          this.$routerpush('/home');
+          location.reload();
+          this.$message({
+            title: '成功',
+            message: '成功退出登录',
+            type: 'success'
+          })
         })
         .catch(err => {
           console.log(err)
         })
-        // 退出登录，清空token
-        // this.$store.commit('removeToken');
-        // this.$router.push('/home');
-        // location.reload(); // 刷新当前页面
-        // this.$message({
-        //   title: '成功',
-        //   message: '成功退出登录',
-        //   type: 'success'
-        // });
       },
       // 跳转注册页面
       toRegister() {

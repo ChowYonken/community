@@ -9,6 +9,7 @@ const Register = () => import('@/views/auth/Register')
 const CreatePost = () => import('@/views/post/CreatePost')
 const Profile = () => import('@/views/profile/ProfilePage')
 const Topic = () => import('@/views/topic/Topic')
+const Message = () => import('@/views/message/Message')
 
 Vue.use(Router)
 
@@ -52,6 +53,11 @@ const routes = [
   {
     path: '/topic',
     component: Topic
+  },
+  // 系统消息
+  {
+    path: '/message',
+    component: Message
   }
 ]
 

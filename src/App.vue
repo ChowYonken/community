@@ -43,6 +43,7 @@
   @import "./assets/css/wangeditor/style.css";
 
   main {
+    min-height: 500px;
     margin-top: 120px;
   }
 

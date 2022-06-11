@@ -38,7 +38,7 @@
         </router-link>
       </div>
       <div class="user-tongzhi">
-        <router-link to="/login">
+        <router-link to="/message">
           <i class="iconfont icon-sixin1"></i>
           <span>通知</span>
         </router-link>
@@ -114,7 +114,7 @@
     height: 80px;
     padding: 0 20px;
     background-color: white;
-    box-shadow: 0 2px 12px 0 rgba(0,0,0,0.1);
+    box-shadow: 0 2px 5px 0 rgba(0,0,0,0.06);
     z-index: 100;
   }
 

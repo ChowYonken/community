@@ -1,5 +1,5 @@
 <!--
- * @Description: 登录组件
+ * @Description: 社区首页组件
  * @Author: chowyonken
  * @Date: 2022-05-18
  * @update: 2022-5-25

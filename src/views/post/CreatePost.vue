@@ -1,5 +1,5 @@
 <!--
- * @Description: 登录组件
+ * @Description: 发帖子组件
  * @Author: chowyonken
  * @Date: 2022-06-09
  * @update: 2022-06-09
@@ -119,4 +119,6 @@
     bottom: -75px;
     right: 20px;
   }
+
+
 </style>

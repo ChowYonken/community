@@ -53,6 +53,11 @@ a {
 .right {
     float: right;
 }
+
+li {
+  list-style: none;
+}
+
 /*背景图*/
 @media (min-width: 768px) {
   .container {

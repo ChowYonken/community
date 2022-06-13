@@ -112,10 +112,12 @@
 <style scoped>
   #login {
     display: flex;
+    min-width: 1225px;
   }
 
   #login .bgc_img {
-    width: 50%;
+    min-width: 767px;
+    min-height: 592px;
     margin-left: 130px;
   }
 
@@ -127,7 +129,7 @@
 
   .box-card {
     /*flex: 450px 288px 1;*/
-    width: 400px;
+    min-width: 400px;
     margin: 100px 100px auto;
     border-radius: 10px;
     box-shadow: 0 0 4px #cac6c6;

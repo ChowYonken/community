@@ -32,6 +32,9 @@
                 <i v-else class="iconfont icon-yonghu"></i>
               </el-upload>
             </el-form-item>
+            <el-form-item label="名称" :label-width="formLabelWidth">
+              <el-input v-model="form.name"></el-input>
+            </el-form-item>
             <el-form-item label="性别" :label-width="formLabelWidth">
               <el-radio v-model="radio" label="1">男</el-radio>
               <el-radio v-model="radio" label="2">女</el-radio>
@@ -62,7 +65,7 @@
         imageUrl: '',
         radio: '1',
         form: {
-
+          name: ''
         },
         formLabelWidth: '120px'
       }
@@ -168,5 +171,9 @@
   .icon-tubiao_rili {
     font-size: 18px;
     color: #409EFF;
+  }
+
+  /deep/ .el-input {
+    width: 200px;
   }
 </style>

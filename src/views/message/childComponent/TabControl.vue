@@ -3,7 +3,11 @@
     <div class="tab-control-item" v-for="(item, index) in titles"
          :class="{active: currentIndex === index}"
          @click="itemClick(index)">
-      <span>{{item}}</span>
+      <span>
+        <el-badge :value="12" class="item">
+          {{item}}
+        </el-badge>
+      </span>
     </div>
   </div>
 </template>
@@ -66,6 +70,12 @@
     padding: 5px;
     color: #71777c;
     font-size: 14px;
+  }
+
+  /deep/ .el-badge__content.is-fixed {
+    position: absolute;
+    top: 10px;
+    right: -3px;
   }
 
   .active {

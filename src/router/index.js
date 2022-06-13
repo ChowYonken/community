@@ -10,6 +10,7 @@ const CreatePost = () => import('@/views/post/CreatePost')
 const Profile = () => import('@/views/profile/ProfilePage')
 const Topic = () => import('@/views/topic/Topic')
 const Message = () => import('@/views/message/Message')
+const Chat = () => import('@/views/message/Chat')
 
 Vue.use(Router)
 
@@ -58,6 +59,11 @@ const routes = [
   {
     path: '/message',
     component: Message
+  },
+  // 聊天界面
+  {
+    path: '/chat',
+    component: Chat
   }
 ]
 

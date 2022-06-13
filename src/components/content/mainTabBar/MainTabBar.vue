@@ -32,7 +32,7 @@
     <!--用户 已登录-->
     <div class="user" v-else>
       <div class="user-msg">
-        <router-link to="/login">
+        <router-link to="/chat">
           <i class="iconfont icon-rcd-dialogue"></i>
           <span>私信</span>
         </router-link>

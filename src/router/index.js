@@ -11,6 +11,7 @@ const Profile = () => import('@/views/profile/ProfilePage')
 const Topic = () => import('@/views/topic/Topic')
 const Message = () => import('@/views/message/Message')
 const Chat = () => import('@/views/message/Chat')
+const Search = () => import('@/views/search/Search')
 
 Vue.use(Router)
 
@@ -64,6 +65,11 @@ const routes = [
   {
     path: '/chat',
     component: Chat
+  },
+  // 搜索页面
+  {
+    path: '/search',
+    component: Search
   }
 ]
 

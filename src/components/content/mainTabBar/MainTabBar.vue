@@ -12,8 +12,8 @@
     </div>
     <!--搜索-->
     <div class="search">
-      <el-input placeholder="请输入搜索内容">
-        <el-button slot="append" icon="el-icon-search"></el-button>
+      <el-input placeholder="请输入搜索内容" v-model="keyWord" @keyup.enter.native="searchKeyWord">
+        <el-button slot="append" icon="el-icon-search" @click.native="searchKeyWord" ></el-button>
       </el-input>
     </div>
     <!--未登录-->
@@ -66,7 +66,8 @@
     name: "MainTabBar",
     data() {
       return {
-        activeIndex: ''
+        activeIndex: '',
+        keyWord: ''
       };
     },
     methods: {
@@ -100,6 +101,10 @@
       // 跳转个人主页
       toProfile() {
         this.$router.push('./profile')
+      },
+      // 搜索帖子关键字
+      searchKeyWord() {
+        this.$router.push('./search')
       }
     }
   }

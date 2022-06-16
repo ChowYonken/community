@@ -43,18 +43,44 @@
                       autocomplete="off"
                       placeholder="请再次输入密码"/>
           </el-form-item>
+          <el-form-item>
+            <el-input placeholder="请输入激活码" v-model="ruleForm.code"></el-input>
+            <el-button type="primary" @click="activateUser('ruleForm')">获取激活码</el-button>
+          </el-form-item>
           <!-- 注册，重置 按钮表单域-->
           <el-form-item>
-            <el-button type="primary" @click="submitForm('ruleForm')">立即注册</el-button>
-<!--            <el-button @click="resetForm('ruleForm')">重置</el-button>-->
+            <el-button type="primary" @click="submitForm">立即注册</el-button>
           </el-form-item>
         </el-form>
+        <!--弹出激活码-->
+<!--        <el-form ref="activationForm"-->
+<!--                 :model="activationForm"-->
+<!--                 status-icon>-->
+<!--          <el-dialog-->
+<!--            title="请输入激活码"-->
+<!--            :visible.sync="centerDialogVisible"-->
+<!--            width="30%"-->
+<!--            center>-->
+<!--              <el-form-item prop="code">-->
+<!--                <el-input v-model="activationForm.code" placeholder="请输入激活码"/>-->
+<!--              </el-form-item>-->
+<!--              <span slot="footer" class="dialog-footer">-->
+<!--                <el-form-item>-->
+<!--                  <el-button type="primary" @click="activateUser()">确 定</el-button>-->
+<!--                </el-form-item>-->
+<!--              </span>-->
+<!--          </el-dialog>-->
+<!--        </el-form>-->
       </div>
     </el-card>
   </div>
 </template>
 
 <script>
+
+  import {register} from "@/network/api/register";
+  import {activation} from "@/network/api/register"
+
   export default {
     name: "Register",
     data() {
@@ -68,11 +94,14 @@
         }
       };
       return {
+        // 是否显示dialog弹窗
+        centerDialogVisible: false,
         // 表单数据对象
         ruleForm: {
           email: '',
           pass: '',
-          checkPass:''
+          checkPass:'',
+          code: ''
         },
         rules: {
           email: [
@@ -97,17 +126,35 @@
             { required: true, message: '请再次输入密码', trigger: 'blur' },
             { validator: validatePass, trigger: 'blur' }
           ]
-        }
+        },
+        // 存储激活后返回的userId
+        userId: ''
       }
     },
     methods: {
-      // 注册的点击事件
-      submitForm(formName) {
+      // 账号激活
+      activateUser(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            this.$message({
-              type: "success",
-              message: '注册成功'
+            // 如果校验通过 则向后端发送邮箱和密码
+            register(this.ruleForm.email,this.ruleForm.pass)
+            .then((res) => {
+              console.log(res)
+              if(res.data.status === 208) {
+                this.$message({
+                  message: res.data.message,
+                  type: 'warning'
+                })
+              } else {
+                this.$message({
+                  message: res.data.message,
+                  type: 'success'
+                })
+              }
+              this.userId = res.data.data
+            })
+            .catch(err => {
+              console.log(err)
             })
           } else {
             console.log('error submit!!');
@@ -115,9 +162,24 @@
           }
         });
       },
-      // 重置的点击事件
-      resetForm(formName) {
-        this.$refs[formName].resetFields()
+      // 注册点击事件
+      submitForm() {
+        activation(this.userId,this.ruleForm.code)
+        .then(res => {
+          console.log(res)
+          this.$message({
+            message: res.data.message,
+            type: 'success'
+          })
+          if(res.data.status === 100) {
+            this.$router.push('./login')
+          } else {
+            this.$router.push('./register')
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
       }
     }
   }

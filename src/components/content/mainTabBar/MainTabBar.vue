@@ -82,7 +82,7 @@
           console.log(res)
           // 退出登录，清空token
           this.$store.commit('removeToken');
-          this.$routerpush('/home');
+          this.$router.push('/home');
           location.reload();
           this.$message({
             title: '成功',
@@ -192,7 +192,12 @@
 
   .user-to-login .login {
     color: #222226;
+    width: 50px;
     margin: 0 20px;
+  }
+
+  .user-to-login .register {
+    width: 50px;
   }
 
   .user-to-login span {

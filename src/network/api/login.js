@@ -12,7 +12,7 @@ export function LoginPostData(email,password) {
   })
 }
 
-// post接口(登出)
+// get接口(登出)
 export function LogoutPostData(Token) {
   return request({
     // headers: {

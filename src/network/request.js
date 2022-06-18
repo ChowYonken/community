@@ -3,8 +3,8 @@ import store from "@/store";
 
 // 创建axios实例
 const instance = axios.create({
-  // baseURL: 'http://192.168.149.198:8090',
-  baseURL: 'http://172.20.10.2:8090',
+  baseURL: 'http://192.168.149.198:8090',
+  // baseURL: 'http://172.20.10.2:8090',
   timeout: 5000
 })
 

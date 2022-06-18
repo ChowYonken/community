@@ -93,8 +93,8 @@
           console.log(res)
           // 将token存到userToken中
           this.userToken = res.data.data
-          this.$store.commit('setToken', this.userToken);
           // 将token本地存储到回话中
+          this.$store.commit('setToken', this.userToken);
           this.$router.push('/home')
           this.$message({
             message: '恭喜你，登录成功',

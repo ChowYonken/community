@@ -31,22 +31,25 @@
     </div>
     <!--用户 已登录-->
     <div class="user" v-else>
+      <!--私信-->
       <div class="user-msg">
         <router-link to="/chat">
           <i class="iconfont icon-rcd-dialogue"></i>
           <span>私信</span>
         </router-link>
       </div>
+      <!--通知-->
       <div class="user-tongzhi">
         <router-link to="/message">
           <i class="iconfont icon-sixin1"></i>
           <span>通知</span>
         </router-link>
       </div>
+      <!--用户信息-->
       <div class="user-login">
         <el-dropdown>
           <span class="el-dropdown-link touxiang">
-            <img src="@/assets/img/touxiang.jpg" alt="">
+            <img :src="docUrl ? docUrl : default_img" alt="">
           </span>
           <el-dropdown-menu slot="dropdown">
             <div @click="toProfile"><el-dropdown-item><i class="iconfont icon-shouye"></i>个人主页</el-dropdown-item></div>
@@ -67,7 +70,9 @@
     data() {
       return {
         activeIndex: '',
-        keyWord: ''
+        keyWord: '',
+        docUrl: '',  //头像
+        default_img: require("@/assets/img/defaultImg.jpg")
       };
     },
     methods: {
@@ -170,8 +175,8 @@
 
   #header .user .touxiang {
     display: inline-block;
-    width: 50px;
-    height: 50px;
+    width: 51px;
+    height: 51px;
     border: 1px solid #DCDCDC;
     border-radius: 50%;
     margin: 14px 55px 10px;

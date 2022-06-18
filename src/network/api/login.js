@@ -18,7 +18,7 @@ export function LogoutPostData(Token) {
     // headers: {
     //   'Authorization': 'Bearer ${Token}'
     // },
-    url: '/signOut',
+    url: '/logout',
     method: 'get',
     // data: {
     //   Token

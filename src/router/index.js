@@ -83,14 +83,14 @@ export default router
 // 导航守卫
 // 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
 // router.beforeEach((to, from, next) => {
-//   if (to.path === '/home') {
+//   if (to.path === '/login') {
 //     next();
 //   } else {
 //     // 从本地获取token
 //     let token = localStorage.getItem('token');
 //     // 判断token是否为空如果为空则跳转到登录页 如果有则放行
 //     if (token === null || token === '') {
-//       next({path:'/home'});
+//       next({path:'/login'});
 //     } else {
 //       next();
 //     }

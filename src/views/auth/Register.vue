@@ -44,33 +44,17 @@
                       placeholder="请再次输入密码"/>
           </el-form-item>
           <el-form-item>
-            <el-input placeholder="请输入激活码" v-model="ruleForm.code"></el-input>
-            <el-button type="primary" @click="activateUser('ruleForm')">获取激活码</el-button>
+            <div class="activation">
+              <el-input placeholder="请输入激活码" v-model="ruleForm.code" class="activation-input"></el-input>
+              <el-button type="primary" @click="activateUser('ruleForm')" class="activation-btn">获取激活码</el-button>
+<!--              <button @click="activateUser('ruleForm')" class="activation-btn">获取激活码</button>-->
+            </div>
           </el-form-item>
           <!-- 注册，重置 按钮表单域-->
           <el-form-item>
             <el-button type="primary" @click="submitForm">立即注册</el-button>
           </el-form-item>
         </el-form>
-        <!--弹出激活码-->
-<!--        <el-form ref="activationForm"-->
-<!--                 :model="activationForm"-->
-<!--                 status-icon>-->
-<!--          <el-dialog-->
-<!--            title="请输入激活码"-->
-<!--            :visible.sync="centerDialogVisible"-->
-<!--            width="30%"-->
-<!--            center>-->
-<!--              <el-form-item prop="code">-->
-<!--                <el-input v-model="activationForm.code" placeholder="请输入激活码"/>-->
-<!--              </el-form-item>-->
-<!--              <span slot="footer" class="dialog-footer">-->
-<!--                <el-form-item>-->
-<!--                  <el-button type="primary" @click="activateUser()">确 定</el-button>-->
-<!--                </el-form-item>-->
-<!--              </span>-->
-<!--          </el-dialog>-->
-<!--        </el-form>-->
       </div>
     </el-card>
   </div>
@@ -220,10 +204,34 @@
     box-shadow: 0 0 4px #cac6c6;
   }
 
+  .box-card .activation {
+    display: flex;
+  }
+
+  .box-card .activation .activation-input {
+    width: 175px;
+  }
+
+  .box-card .activation .activation-btn {
+    float: right;
+    width: 110px!important;
+    margin-left: 23px;
+    cursor: pointer;
+    color: #FFF;
+    background-color: #409EFF;
+    border: 1px solid #409EFF;
+    border-radius: 5px;
+  }
+
   /deep/ .el-form-item .el-form-item__content {
     margin: 0 25px!important;
   }
+
   /deep/ .el-form-item .el-form-item__content .el-button--primary {
     width: 308px;
+  }
+
+  /deep/ .el-input {
+     display: block;
   }
 </style>

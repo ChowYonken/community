@@ -11,6 +11,7 @@
     "@wangeditor/editor-for-vue": "^1.0.1",
     "axios": "^0.21.1",
     "core-js": "^2.6.12",
+    "element-china-area-data": "^5.0.2",
     "element-ui": "^2.15.8",
     "hbl-comment": "^1.2.3",
     "jwchat": "^1.0.8",

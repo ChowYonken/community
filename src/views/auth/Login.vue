@@ -1,7 +1,7 @@
 <!--
  * @Description: 登录组件
  * @Author: chowyonken
- * @Date: 2022-05-13
+ * @Date: 2022-06-24
  -->
 <template>
   <div id="login">
@@ -39,7 +39,29 @@
               <span class="register">
                 <router-link :to="{path: '/register'}">注册</router-link>
               </span>
-              <span class="forget">忘记密码</span>
+              <span class="forget" @click="dialogFormVisible = true">
+                <a href="javascript:;">忘记密码</a>
+              </span>
+              <!--重置密码弹框-->
+              <el-dialog title="重置密码" :visible.sync="dialogFormVisible">
+                <el-form ref="form"
+                         :model="form"
+                         :rules="rules">
+                  <el-form-item prop="email">
+                    <el-input v-model="form.email"class="email-input" placeholder="请输入邮箱"></el-input>
+                  </el-form-item>
+                  <el-form-item prop="oldPwd">
+                    <el-input v-model="form.oldPwd" class="email-input" placeholder="请输入旧密码"></el-input>
+                  </el-form-item>
+                  <el-form-item prop="newPwd">
+                    <el-input v-model="form.newPwd" class="email-input" placeholder="请输入新密码"></el-input>
+                  </el-form-item>
+                  <div slot="footer" class="dialog-footer">
+                    <el-button @click="dialogFormVisible = false">取 消</el-button>
+                    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+                  </div>
+                </el-form>
+              </el-dialog>
             </div>
           </el-form-item>
         </el-form>
@@ -82,6 +104,14 @@
           ]
         },
         userToken: '', // 用于存储从后台获取的token
+        dialogFormVisible: false,
+        // 重置密码表单数据对象
+        form: {
+          email: '',
+          oldPwd: '',
+          newPwd: ''
+        },
+        formLabelWidth: '120px'
       }
     },
     methods: {
@@ -91,15 +121,20 @@
         LoginPostData(this.ruleForm.email,this.ruleForm.pass)
         .then((res) => {
           console.log(res)
-          // 将token存到userToken中
-          this.userToken = res.data.data
-          // 将token本地存储到回话中
-          this.$store.commit('setToken', this.userToken);
-          this.$router.push('/home')
-          this.$message({
-            message: '恭喜你，登录成功',
-            type: 'success'
-          });
+          if(res.data.status === 100) {
+            // 将token存到userToken中
+            this.userToken = res.data.data
+            // 将token本地存储到回话中
+            this.$store.commit('setToken', this.userToken);
+            this.$router.push('/home')
+            // location.reload();
+            this.$message({
+              message: '恭喜你，登录成功',
+              type: 'success'
+            });
+          } else {
+            this.$message.error("账号或密码错误，请重新输入");
+          }
         })
         .catch(err => {
           console.log(err)
@@ -145,10 +180,24 @@
     padding-right: 15px;
   }
 
+  a:hover {
+    color: #526ECC;
+  }
+
   /deep/ .el-form-item .el-form-item__content {
     margin: 0 25px!important;
   }
   /deep/ .el-form-item .el-form-item__content .el-button--primary {
     width: 308px;
   }
+
+  /*重置密码弹窗*/
+  /deep/ .el-dialog {
+    width: 475px;
+  }
+
+  .email-input {
+    margin-bottom: 20px;
+  }
+
 </style>

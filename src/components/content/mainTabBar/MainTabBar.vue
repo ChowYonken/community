@@ -72,7 +72,8 @@
         activeIndex: '',
         keyWord: '',
         docUrl: '',  //头像
-        default_img: require("@/assets/img/defaultImg.jpg")
+        default_img: require("@/assets/img/defaultImg.jpg"),
+        dialogFormVisible: false
       };
     },
     methods: {

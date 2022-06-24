@@ -43,15 +43,16 @@
               <el-radio v-model="form.radio" label="2">女</el-radio>
             </el-form-item>
             <el-form-item label="所在地" :label-width="formLabelWidth">
-              <el-select v-model="form.region" placeholder="请选择所在地">
-                <el-option label="北京" value="shanghai"></el-option>
-                <el-option label="上海" value="beijing"></el-option>
-              </el-select>
+              <el-cascader size="large"
+                           :options="options"
+                           v-model="form.selectedOptions"
+                           @change="handleChange">
+              </el-cascader>
             </el-form-item>
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="removeImage">取 消</el-button>
-            <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
+            <el-button type="primary" @click="editUser">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -62,6 +63,8 @@
 <script>
 
   import {deleteImg} from '@/network/api/userEdit'
+  import {editUser} from "@/network/api/userEdit";
+  import { CodeToText, regionData, TextToCode } from 'element-china-area-data' //导入地图数据
 
   export default {
     name: "CardInfoContainer",
@@ -75,9 +78,14 @@
           dialogImageUrl: '',
           name: '',
           radio: '1',
-          region: ''
+          selectedOptions: [],
+          address: '',
+          province: '',
+          city: '',
+          area: ''
         },
-        formLabelWidth: '120px'
+        formLabelWidth: '120px',
+        options: regionData
       }
     },
     mounted() {
@@ -144,6 +152,36 @@
           .catch(err => {
             console.log(err)
           })
+      },
+      // 获取省市区级联数据
+      handleChange (value) {
+        console.log(value)
+        //因为上边选择好城市之后打印出来的是编码，这里是将编码转换为文字
+        let province = CodeToText[this.form.selectedOptions[0]] //省
+        let city = CodeToText[this.form.selectedOptions[1]] //市
+        let area = CodeToText[this.form.selectedOptions[2]] //区
+        if (city == '市辖区') {//选择北京市的话，第二个选项为输入框
+          city = province //这里根据后台需求，给它赋值，我这里是如果为市辖区，城市和省名字保持一致
+        }
+        //这里是请求赋值
+        this.form.province = province
+        this.form.city = city
+        this.form.city = area
+
+        let dz = province + '/' + city + '/' + area
+        this.form.address = dz
+        console.log(this.form.address)
+      },
+      // 编辑个人信息
+      editUser() {
+        this.dialogFormVisible = false
+        editUser(this.form.name,this.form.radio,this.form.address,this.form.dialogImageUrl)
+        .then(res => {
+          console.log(res)
+        })
+        .catch(err => {
+          console.log(err)
+        })
       }
     },
     computed: {

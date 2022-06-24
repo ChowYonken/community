@@ -13,3 +13,17 @@ export function deleteImg(filename) {
     }
   })
 }
+
+// 编辑用户资料
+export function editUser(nickname,sex,location,avatar) {
+  return request({
+    url: '/user',
+    method: 'put',
+    data: {
+      nickname,
+      sex,
+      location,
+      avatar
+    }
+  })
+}

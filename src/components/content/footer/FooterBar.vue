@@ -9,7 +9,7 @@
     <div class="content">
       <!--版权-->
       <div class="copyright">
-        <span>©2022 alibb ALL RIGHTS RESERVED</span>
+        <span>©2022 sesee ALL RIGHTS RESERVED</span>
         <span>联系我们：chowyonken@163.com / 18026553956</span>
       </div>
       <!--微信二维码-->

@@ -1,5 +1,13 @@
 import request from "@/network/request";
 
+// 获取用户信息
+export function userInfo() {
+  return request({
+    url: '/user',
+    method: 'get'
+  })
+}
+
 // 删除图片接口
 export function deleteImg(filename) {
   return request({
@@ -27,3 +35,5 @@ export function editUser(nickname,sex,location,avatar) {
     }
   })
 }
+
+

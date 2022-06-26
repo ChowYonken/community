@@ -64,6 +64,7 @@
 
 <script>
   import {LogoutPostData} from "@/network/api/login";
+  import {userInfo} from "@/network/api/userEdit";
 
   export default {
     name: "MainTabBar",
@@ -75,6 +76,14 @@
         default_img: require("@/assets/img/defaultImg.jpg"),
         dialogFormVisible: false
       };
+    },
+    mounted() {
+      userInfo()
+      .then(res => {
+        if(this.docUrl !== res.data.data.avatar) {
+          this.docUrl = res.data.data.avatar
+        }
+      })
     },
     methods: {
       // 跳转登录页面

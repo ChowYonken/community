@@ -3,11 +3,11 @@
     <div class="CardInfo">
       <div class="leftInfo">
         <span>
-          <img src="@/assets/img/profile/touxiang.png" alt="">
+          <img :src="form.dialogImageUrl ? form.dialogImageUrl : default_img" alt="">
         </span>
         <div class="leftInfo-Content">
           <div class="title">
-            <h2>今天没吃饭</h2>
+            <h2>{{form.name}}</h2>
           </div>
           <span class="tagTitleList">
               <i class="iconfont icon-tubiao_rili"></i>
@@ -21,7 +21,7 @@
         <!--编辑资料弹窗-->
         <el-dialog title="编辑个人资料" :visible.sync="dialogFormVisible">
           <el-form :model="form">
-            <el-form-item label="头像" :label-width="formLabelWidth">
+            <el-form-item label="头像" prop="dialogImageUrl" :label-width="formLabelWidth">
               <el-upload
                 class="avatar-uploader"
                 action="http://192.168.149.198:8090/upload/image"
@@ -31,18 +31,18 @@
                 :before-upload="beforeAvatarUpload"
                 @click.native="updateImage"
                 name="image">
-                <img v-if="imageUrl" :src="imageUrl" class="avatar">
+                <img v-if="form.dialogImageUrl" :src="form.dialogImageUrl" class="avatar">
                 <i v-else class="iconfont icon-yonghu"></i>
               </el-upload>
             </el-form-item>
-            <el-form-item label="名称" :label-width="formLabelWidth">
+            <el-form-item label="名称" prop="name" :label-width="formLabelWidth">
               <el-input v-model="form.name"></el-input>
             </el-form-item>
-            <el-form-item label="性别" :label-width="formLabelWidth">
-              <el-radio v-model="form.radio" label="1">男</el-radio>
-              <el-radio v-model="form.radio" label="2">女</el-radio>
+            <el-form-item label="性别" prop="radio" :label-width="formLabelWidth">
+              <el-radio v-model="form.radio" :label="0">男</el-radio>
+              <el-radio v-model="form.radio" :label="1">女</el-radio>
             </el-form-item>
-            <el-form-item label="所在地" :label-width="formLabelWidth">
+            <el-form-item label="所在地" prop="selectedOptions" :label-width="formLabelWidth">
               <el-cascader size="large"
                            :options="options"
                            v-model="form.selectedOptions"
@@ -52,7 +52,7 @@
           </el-form>
           <div slot="footer" class="dialog-footer">
             <el-button @click="removeImage">取 消</el-button>
-            <el-button type="primary" @click="editUser">确 定</el-button>
+            <el-button type="primary" @click="confirmUser">确 定</el-button>
           </div>
         </el-dialog>
       </div>
@@ -63,7 +63,7 @@
 <script>
 
   import {deleteImg} from '@/network/api/userEdit'
-  import {editUser} from "@/network/api/userEdit";
+  import {editUser, userInfo} from "@/network/api/userEdit";
   import { CodeToText, regionData, TextToCode } from 'element-china-area-data' //导入地图数据
 
   export default {
@@ -72,12 +72,13 @@
       return {
         token: '',
         dialogFormVisible: false,
+        default_img: require("@/assets/img/defaultImg.jpg"), // 默认头像
         imageUrl: '', //保存图片地址
         imageName: '',  //保存图片的名字
         form: {
           dialogImageUrl: '',
           name: '',
-          radio: '1',
+          radio: '',
           selectedOptions: [],
           address: '',
           province: '',
@@ -91,11 +92,27 @@
     mounted() {
       // 获取token
       this.token = this.$store.getters.getLocalStorage
+      // 获取用户信息
+      userInfo()
+        .then(res => {
+          console.log(res)
+          // this.form.selectedOptions = []
+          this.form.dialogImageUrl = res.data.data.avatar
+          this.form.name = res.data.data.nickname
+          this.form.radio = res.data.data.sex
+          this.form.address = res.data.data.location
+          let address = res.data.data.location.split('/')
+          this.form.selectedOptions.push(TextToCode[address[0]].code,TextToCode[address[0]][address[1]].code,TextToCode[address[0]][address[1]][address[2]].code)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     },
     methods: {
       // 是否显示编辑信息弹窗
       showDialog() {
         this.dialogFormVisible = true
+
       },
       // 上传头像
       handleAvatarSuccess(res, file) {
@@ -160,24 +177,19 @@
         let province = CodeToText[this.form.selectedOptions[0]] //省
         let city = CodeToText[this.form.selectedOptions[1]] //市
         let area = CodeToText[this.form.selectedOptions[2]] //区
-        if (city == '市辖区') {//选择北京市的话，第二个选项为输入框
-          city = province //这里根据后台需求，给它赋值，我这里是如果为市辖区，城市和省名字保持一致
-        }
-        //这里是请求赋值
-        this.form.province = province
-        this.form.city = city
-        this.form.city = area
+        // if (city == '市辖区') {//选择北京市的话，第二个选项为输入框
+        //   city = province //这里根据后台需求，给它赋值，我这里是如果为市辖区，城市和省名字保持一致
+        // }
 
         let dz = province + '/' + city + '/' + area
         this.form.address = dz
-        console.log(this.form.address)
       },
       // 编辑个人信息
-      editUser() {
+      confirmUser() {
         this.dialogFormVisible = false
         editUser(this.form.name,this.form.radio,this.form.address,this.form.dialogImageUrl)
         .then(res => {
-          console.log(res)
+          location.reload();
         })
         .catch(err => {
           console.log(err)
@@ -279,6 +291,6 @@
   }
 
   /deep/ .el-input {
-    width: 200px;
+    width: 250px;
   }
 </style>

@@ -126,12 +126,14 @@
             this.userToken = res.data.data
             // 将token本地存储到回话中
             this.$store.commit('setToken', this.userToken);
-            this.$router.push('/home')
-            // location.reload();
+            this.$router.push('/')
             this.$message({
               message: '恭喜你，登录成功',
               type: 'success'
             });
+            setTimeout(() => {
+              location.reload()
+            }, 500)
           } else {
             this.$message.error("账号或密码错误，请重新输入");
           }

@@ -12,6 +12,9 @@ const Topic = () => import('@/views/topic/Topic')
 const Message = () => import('@/views/message/Message')
 const Chat = () => import('@/views/message/Chat')
 const Search = () => import('@/views/search/Search')
+const SetUp = () => import('@/views/setup/SetUp')
+const UserInfo = () => import('@/views/setup/childComponent/UserInfo')
+const IdSet = () => import('@/views/setup/childComponent/IdSet')
 
 Vue.use(Router)
 
@@ -70,6 +73,22 @@ const routes = [
   {
     path: '/search',
     component: Search
+  },
+  // 个人设置
+  {
+    path: '/setup',
+    component: SetUp,
+    redirect: '/userInfo',
+    children: [  // 嵌套路由
+      {
+        path: '/userInfo',
+        component: UserInfo
+      },
+      {
+        path: '/idSet',
+        component: IdSet
+      }
+    ]
   }
 ]
 

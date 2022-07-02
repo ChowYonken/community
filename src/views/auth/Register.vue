@@ -47,7 +47,6 @@
             <div class="activation">
               <el-input placeholder="请输入激活码" v-model="ruleForm.code" class="activation-input"></el-input>
               <el-button type="primary" @click="activateUser('ruleForm')" class="activation-btn">获取激活码</el-button>
-<!--              <button @click="activateUser('ruleForm')" class="activation-btn">获取激活码</button>-->
             </div>
           </el-form-item>
           <!-- 注册，重置 按钮表单域-->

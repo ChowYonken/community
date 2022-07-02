@@ -11,7 +11,9 @@
     </header>
     <!--内容-->
     <main>
-      <router-view/>
+      <keep-alive>
+        <router-view/>
+      </keep-alive>
     </main>
     <!--尾部-->
     <footer>

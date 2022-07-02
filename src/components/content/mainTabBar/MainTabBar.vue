@@ -52,7 +52,8 @@
             <img :src="docUrl ? docUrl : default_img" alt="">
           </span>
           <el-dropdown-menu slot="dropdown">
-            <div @click="toProfile"><el-dropdown-item><i class="iconfont icon-shouye"></i>个人主页</el-dropdown-item></div>
+            <router-link to="/profile"><div><el-dropdown-item><i class="iconfont icon-shouye"></i>个人主页</el-dropdown-item></div></router-link>
+            <router-link to="/setup"><div><el-dropdown-item><i class="iconfont icon-rcd-setting-f"></i>账号设置</el-dropdown-item></div></router-link>
             <div @click="logout"><el-dropdown-item ><i class="iconfont icon-tuichu"></i>退出</el-dropdown-item></div>
           </el-dropdown-menu>
         </el-dropdown>
@@ -78,13 +79,19 @@
       };
     },
     mounted() {
-      userInfo()
-      .then(res => {
-        if(this.docUrl !== res.data.data.avatar) {
-          this.docUrl = res.data.data.avatar
-        }
-      })
+      if(this.$store.getters !== '') {
+        userInfo()
+          .then(res => {
+            if(this.docUrl !== res.data.data.avatar) {
+              this.docUrl = res.data.data.avatar
+            }
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      }
     },
+
     methods: {
       // 跳转登录页面
       toLogin() {

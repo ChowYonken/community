@@ -35,12 +35,12 @@
         <img src="@/assets/img/detail/3.png" alt="">
       </div>
       <ul class="operate" ref="operate">
-        <li class="zan common">
-          <i class="iconfont icon-dianzan" :class="{active: zanCurrent}" @click="zanClick"></i>
+        <li class="zan common"  @click="zanClick">
+          <i class="iconfont icon-dianzan" :class="{active: zanCurrent}"></i>
           <span>点赞（8）</span>
         </li>
-        <li class="reply common">
-          <i class="iconfont icon-pinglun" @click="toClick"></i>
+        <li class="reply common" @click="toClick">
+          <i class="iconfont icon-pinglun"></i>
           <span>评论（8）</span>
         </li>
         <li class="like common">

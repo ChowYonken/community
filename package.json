@@ -10,6 +10,7 @@
     "@wangeditor/editor": "^5.0.1",
     "@wangeditor/editor-for-vue": "^1.0.1",
     "axios": "^0.21.1",
+    "bright-comment": "^1.5.7",
     "core-js": "^2.6.12",
     "element-china-area-data": "^5.0.2",
     "element-ui": "^2.15.8",

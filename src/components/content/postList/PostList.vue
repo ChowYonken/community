@@ -6,6 +6,7 @@
         <div class="info">
           <router-link to="/detail">
             <span class="title">金州勇士，天道酬勤：合计98岁的库里克雷追梦，八年六总决赛</span>
+<!--            <span class="title">{{item.title}}</span>-->
           </router-link>
           <span>50赞</span>
           <span>744回复</span>
@@ -23,7 +24,21 @@
 
 <script>
   export default {
-    name: "PostList"
+    name: "PostList",
+    props: {
+      postList: {
+        type: Array,
+        default() {
+          return []
+        }
+      }
+    },
+    data() {
+      return {
+      }
+    },
+    mounted() {
+    }
   }
 </script>
 

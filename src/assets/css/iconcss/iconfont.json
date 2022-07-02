@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "9007288",
+      "name": "个人资料",
+      "font_class": "gerenziliao",
+      "unicode": "e661",
+      "unicode_decimal": 58977
+    },
+    {
+      "icon_id": "15392350",
+      "name": "账号设置",
+      "font_class": "zhanghaoshezhi",
+      "unicode": "e68a",
+      "unicode_decimal": 59018
+    },
+    {
       "icon_id": "424264",
       "name": "重置密码",
       "font_class": "zhongzhimima",

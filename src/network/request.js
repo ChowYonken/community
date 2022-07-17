@@ -1,10 +1,12 @@
 import axios from 'axios'
 import store from "@/store";
+import { resolve } from 'core-js/fn/promise';
 
 // 创建axios实例
 const instance = axios.create({
-  baseURL: 'http://192.168.149.198:8090',
+  // baseURL: 'http://192.168.149.198:8090',
   // baseURL: 'http://172.20.10.2:8090',
+  baseURL: 'http://api.fanzibang.xyz',
   timeout: 5000
 })
 
@@ -19,6 +21,23 @@ instance.interceptors.request.use(
       // config.headers.token = store.getters.getLocalStorage;
     }
     return config;
+  },
+  error => {
+    return Promise.reject(error);
+  }
+)
+
+// 响应拦截
+instance.interceptors.response.use(
+  response => {
+    // 判断token是否过期
+    if(response.status === 205) {
+      // 退出登录，清空token
+      this.$store.commit('removeToken');
+      this.$router.push('/home');
+      location.reload()
+    }
+    return response;
   },
   error => {
     return Promise.reject(error);

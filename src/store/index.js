@@ -15,8 +15,9 @@ const store = new Vuex.Store({
       // 将token本地存储到回话中
       localStorage.setItem('token', value);
     },
-    removeToken(state, token) { // 删除token
+    removeToken(state) { // 删除token
       localStorage.removeItem('token');
+      state.token = ''
     }
   },
   actions: {},

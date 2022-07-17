@@ -97,21 +97,28 @@ const router = new Router({
   mode: 'history'
 })
 
-export default router
 
-// 导航守卫
-// 使用 router.beforeEach 注册一个全局前置守卫，判断用户是否登陆
+// // 导航守卫
+// // 如果token过期 就会让用户自动登录
 // router.beforeEach((to, from, next) => {
-//   if (to.path === '/login') {
-//     next();
-//   } else {
-//     // 从本地获取token
-//     let token = localStorage.getItem('token');
-//     // 判断token是否为空如果为空则跳转到登录页 如果有则放行
-//     if (token === null || token === '') {
-//       next({path:'/login'});
-//     } else {
-//       next();
-//     }
+//   // 获取存储localStorage的token
+//   let token = window.localStorage.getItem('token')
+//   // 获取存储token的开始时间
+//   const tokenStartTime = window.localStorage.getItem('tokenStartTime')
+//   // 定义一天过期
+//   const timeOver = 1 * 24 * 3600 * 1000
+//   // 当前时间
+//   let date = new Date().getTime()
+//   // 如果大于说明是token过期了
+//   if(date - tokenStartTime > timeOver) {
+//      token = null
 //   }
+//   // 如果token过期了
+//   // if (!token) {
+//   //   this.$router.push('/home');
+//   //   location.reload()
+//   // }
+//   // next()
 // })
+
+export default router

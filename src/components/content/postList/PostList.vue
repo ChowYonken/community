@@ -1,20 +1,19 @@
 <template>
   <div class="text-list-model">
-    <div class="list-item-wrap">
+    <div class="list-item-wrap" v-for="item in postList">
       <div class="list-item">
         <!--帖子标题-->
         <div class="info">
           <router-link to="/detail">
-            <span class="title">金州勇士，天道酬勤：合计98岁的库里克雷追梦，八年六总决赛</span>
-<!--            <span class="title">{{item.title}}</span>-->
+            <span class="title">{{item.title}}</span>
           </router-link>
-          <span>50赞</span>
-          <span>744回复</span>
+          <span>{{item.likeCount}}赞</span>
+          <span>{{item.commentCount}}回复</span>
         </div>
         <!--帖子分类-->
         <div class="lable">
           <router-link to="/topic">
-            <span>娱乐圈</span>
+            <span>{{item.plate}}</span>
           </router-link>
         </div>
       </div>

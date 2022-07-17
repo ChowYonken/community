@@ -1,24 +1,13 @@
 <template>
   <el-card class="content" shadow="always">
-    <el-tabs v-model="activeName" @tab-click="handleClick">
+    <el-tabs v-model="activeName" @tab-click="tabClick">
       <el-tab-pane label="最新主题" name="1">
-
+        <post-list :post-list="allIntelligence"/>
       </el-tab-pane>
       <el-tab-pane label="最热主题" name="2">
+        <post-list :post-list="allIntelligence"/>
       </el-tab-pane>
-      <post-list :post-list="allIntelligence"/>
-<!--      <article>-->
-<!--        <post-list :post-list="allIntelligence"/>-->
-<!--      </article>-->
     </el-tabs>
-<!--    <el-pagination-->
-<!--      background-->
-<!--      layout="prev, pager, next"-->
-<!--      :total="total"-->
-<!--      @current-change="changePageNum"-->
-<!--      :page-size="pageSize"-->
-<!--      :current-page="currentIndex">-->
-<!--    </el-pagination>-->
   </el-card>
 </template>
 
@@ -43,6 +32,10 @@
         allIntelligence: [] // 所有的数据
       }
     },
+    created() {
+      // 请求帖子列表数据
+      this.getPost(this.userId, this.currentIndex, this.pageSize, this.activeName)
+    },
     mounted() {
       // 获取数据总条数
       getCount(this.userId)
@@ -52,20 +45,31 @@
       .catch(err => {
         console.log(err)
       })
-      // 分页显示帖子
-      getShowPost(this.userId,this.currentIndex,this.pageSize,this.activeName)
-      .then(res => {
-        console.log(res)
-        this.allintelligence = res.data.data
-        console.log(this.allintelligence)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+
     },
     methods: {
-      handleClick(tab, event) {
-        console.log(tab, event);
+      tabClick(tab, event) {
+        // 获取tabId
+        let tabId = event.target.getAttribute('id')
+        // 判断点击哪个tab
+        if(tabId === 'tab-1') {
+          this.activeName = "1"
+          this.getPost(this.userId, this.currentIndex, this.pageSize, this.activeName)
+        } else if(tabId === 'tab-2') {
+          this.activeName = "2"
+          this.getPost(this.userId, this.currentIndex, this.pageSize, this.activeName)
+        }
+      },
+      getPost(userId,currentIndex,pageSize,activeName) {
+        let that = this;
+        getShowPost(userId,currentIndex,pageSize,activeName)
+          .then(res => {
+            console.log(res)
+            that.allIntelligence = res.data.data
+          })
+          .catch(err => {
+            console.log(err)
+          })
       }
     }
   }
@@ -78,7 +82,7 @@
     margin-right: 10px;
   }
 
-  /deep/ .el-tabs__item {
+  div/deep/ .el-tabs__item {
     font-weight: 700;
   }
 
@@ -118,7 +122,7 @@
     color: #409EFF;
   }
 
-  /deep/ .el-pagination {
+  div/deep/ .el-pagination {
     position: relative;
     top: 440px;
     /*left: 120px;*/

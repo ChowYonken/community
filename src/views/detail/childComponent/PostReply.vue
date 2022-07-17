@@ -26,7 +26,7 @@
         // 标签名
         label: '',
         // 头像
-        avatar: require("@/assets/img/defaultImg.jpg"),
+        avatar: '',
         // 评论条数
         commentNum: 0,
         // 评论列表

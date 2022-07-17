@@ -78,24 +78,28 @@
         dialogFormVisible: false
       };
     },
-    mounted() {
-      if(this.$store.getters !== '') {
-        userInfo()
-          .then(res => {
-            if(this.docUrl !== res.data.data.avatar) {
-              this.docUrl = res.data.data.avatar
-            }
-          })
-          .catch(err => {
-            console.log(err)
-          })
+    created() {
+      // 登录后获取用户头像
+      if(this.$store.getters.getLocalStorage !== '') {
+        this.getUserInfo()
       }
     },
-
     methods: {
       // 跳转登录页面
       toLogin() {
         this.$router.push('./login')
+      },
+      // 网络请求
+      getUserInfo() {
+        userInfo()
+        .then(res => {
+          if(this.docUrl !== res.data.data.avatar) {
+            this.docUrl = res.data.data.avatar
+          }
+        })
+        .catch(err => {
+          console.log(err)
+        })
       },
       // 退出登录
       logout() {
@@ -105,7 +109,6 @@
           // 退出登录，清空token
           this.$store.commit('removeToken');
           this.$router.push('/home');
-          location.reload();
           this.$message({
             title: '成功',
             message: '成功退出登录',
@@ -166,7 +169,7 @@
     width: 270px!important;
   }
 
-  /deep/ .el-dropdown {
+  div/deep/ .el-dropdown {
     width: 100%;
   }
 
@@ -176,7 +179,7 @@
     margin-left: 30px;
   }
 
-  /deep/ .el-dropdown {
+  div/deep/ .el-dropdown {
     width: 165px!important;
   }
 

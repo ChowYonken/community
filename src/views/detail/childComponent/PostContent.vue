@@ -12,6 +12,8 @@
           </div>
           <!--发布时间-->
           <span class="time">发布于2022-06-11 17:35:45</span>
+          <!-- 帖子类型 -->
+          <span class="plate">娱乐圈</span>
         </div>
       </div>
       <div class="rightInfo">
@@ -83,7 +85,7 @@
 </script>
 
 <style scoped>
-  /deep/ .el-card__body, .el-main {
+  div/deep/ .el-card__body, .el-main {
     padding: 20px 0px 20px 110px!important;
   }
   .content {
@@ -119,9 +121,14 @@
     color: #191c22;
   }
 
-  .leftInfo-Content .time {
+  .leftInfo-Content .time,
+  .leftInfo-Content .plate {
     font-size: 14px;
     color: #7B7E86;
+  }
+
+  .leftInfo-Content .plate {
+    margin-left: 10px;
   }
 
   .leftInfo .tagTitleList span {

@@ -186,15 +186,15 @@
     color: #526ECC;
   }
 
-  /deep/ .el-form-item .el-form-item__content {
+  div/deep/ .el-form-item .el-form-item__content {
     margin: 0 25px!important;
   }
-  /deep/ .el-form-item .el-form-item__content .el-button--primary {
+  div/deep/ .el-form-item .el-form-item__content .el-button--primary {
     width: 308px;
   }
 
   /*重置密码弹窗*/
-  /deep/ .el-dialog {
+  div/deep/ .el-dialog {
     width: 475px;
   }
 

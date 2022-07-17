@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build"
+    "build": "vue-cli-service build",
+    "postinstall": "patch-package"
   },
   "dependencies": {
     "@wangeditor/editor": "^5.0.1",
@@ -22,6 +23,7 @@
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.2.0",
-    "@vue/cli-service": "^3.2.0"
+    "@vue/cli-service": "^3.2.0",
+    "patch-package": "^6.4.7"
   }
 }

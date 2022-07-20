@@ -4,9 +4,12 @@
       <div class="list-item">
         <!--帖子标题-->
         <div class="info">
-          <router-link to="/detail">
+          <!-- <div @click="itemClick(item)" >
             <span class="title">{{item.title}}</span>
-          </router-link>
+          </div> -->
+          <div @click="itemClick(item)" >
+            <li><span class="title">{{item.title}}</span></li>
+          </div>
           <span>{{item.likeCount}}赞</span>
           <span>{{item.commentCount}}回复</span>
         </div>
@@ -34,9 +37,16 @@
     },
     data() {
       return {
+        
       }
     },
     mounted() {
+    },
+    methods: {
+      itemClick(item) {
+        this.$router.push('/discussPost/' + item.id)
+        // location.reload()
+      }
     }
   }
 </script>
@@ -70,7 +80,7 @@
     color: #7B7E86;
   }
 
-  .list-item .info a:hover .title {
+  .list-item .info li:hover .title {
     color: #409EFF;
   }
 

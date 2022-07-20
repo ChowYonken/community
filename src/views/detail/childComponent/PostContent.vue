@@ -8,42 +8,36 @@
         <div class="leftInfo-Content">
           <!--用户名-->
           <div class="title">
-            <span class="name">今天没吃饭</span>
+            <span class="name">{{author}}</span>
           </div>
           <!--发布时间-->
-          <span class="time">发布于2022-06-11 17:35:45</span>
+          <span class="time">{{createTime}}</span>
           <!-- 帖子类型 -->
-          <span class="plate">娱乐圈</span>
+          <span class="plate">{{plate}}</span>
         </div>
       </div>
       <div class="rightInfo">
-        <span>已赞1</span> |
-        <span>回帖1</span>
+        <span>已赞{{likeCount}}</span> |
+        <span>回帖{{commentCount}}</span>
       </div>
     </div>
     <div class="post-text">
       <!--标题-->
       <div class="title">
-        <h3>王心凌是颜值与实力并存的女演员吗？</h3>
+        <h3>{{title}}</h3>
       </div>
+      <!-- 帖子内容 -->
       <div class="text">
-        <span>王心凌是颜值与实力并存的女演员吗?
-        王心凌是颜值与实力并存的女演员吗?
-        王心凌是颜值与实力并存的女演员吗?
-        王心凌是颜值与实力并存的女演员吗?
-        王心凌是颜值与实力并存的女演员吗?</span>
-        <img src="@/assets/img/detail/1.png" alt="">
-        <img src="@/assets/img/detail/2.png" alt="">
-        <img src="@/assets/img/detail/3.png" alt="">
+        <span>{{content}}</span>
       </div>
       <ul class="operate" ref="operate">
         <li class="zan common"  @click="zanClick">
           <i class="iconfont icon-dianzan" :class="{active: zanCurrent}"></i>
-          <span>点赞（8）</span>
+          <span>点赞（{{likeCount}}）</span>
         </li>
         <li class="reply common" @click="toClick">
           <i class="iconfont icon-pinglun"></i>
-          <span>评论（8）</span>
+          <span>评论（{{commentCount}}）</span>
         </li>
         <li class="like common">
           <i class="iconfont icon-shoucang" :class="{active2: likeCurrent}" @click="likeClick"></i>
@@ -59,12 +53,43 @@
 </template>
 
 <script>
+
+  import {getPostDetail} from "@/network/api/post";
+
   export default {
     name: "PostContent",
     data() {
       return {
+        id: null, // 保存本帖子id
         zanCurrent: false,
-        likeCurrent: false
+        likeCurrent: false,
+        author: '', // 作者名字
+        commentCount: null, // 评论数
+        content: '', // 帖子内容
+        likeCount: null, // 点赞数
+        createTime: '', // 发布帖子时间
+        plate: '', // 帖子类型
+        title: '', // 帖子标题
+      }
+    },
+    created() {
+      // 保存本帖子的id
+      this.id = this.$route.params.id
+      // 请求帖子的详情信息
+      if(this.id) {
+        this.getPost(this.id)
+      }
+    },
+    watch: {
+      //监听相同路由下参数变化的时候，从而实现异步刷新
+      '$route' (to, from) {
+        //你在create里的方法
+        // 保存本帖子的id
+        this.id = this.$route.params.id
+        // 请求帖子的详情信息
+        if(this.id) {
+          this.getPost(this.id)
+        }
       }
     },
     methods: {
@@ -78,6 +103,20 @@
         window.scrollTo({
           top: this.$refs['operate'].offsetTop + 55,
           behavior: "smooth"
+        })
+      },
+      // 请求帖子详情信息的方法
+      getPost(id) {
+        getPostDetail(id)
+        .then(res => {
+          const data = res.data.data
+          this.author = data.author
+          this.commentCount = data.commentCount
+          this.content = data.content
+          this.likeCount = data.likeCount
+          this.createTime = data.createTime
+          this.plate = data.plate
+          this.title = data.title
         })
       }
     }

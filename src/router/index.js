@@ -31,7 +31,7 @@ const routes = [
   },
   // 帖子详情页
   {
-    path: '/detail',
+    path: '/discussPost/:id',
     component: DetailPost
   },
   // 注册

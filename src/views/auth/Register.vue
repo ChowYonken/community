@@ -222,15 +222,15 @@
     border-radius: 5px;
   }
 
-  /deep/ .el-form-item .el-form-item__content {
+  div/deep/ .el-form-item .el-form-item__content {
     margin: 0 25px!important;
   }
 
-  /deep/ .el-form-item .el-form-item__content .el-button--primary {
+  div/deep/ .el-form-item .el-form-item__content .el-button--primary {
     width: 308px;
   }
 
-  /deep/ .el-input {
+  div/deep/ .el-input {
      display: block;
   }
 </style>

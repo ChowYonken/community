@@ -137,9 +137,9 @@
             setTimeout(() => {
               this.$store.commit('removeToken');
               this.$router.push('/login');
-              setTimeout(() => {
-                location.reload()
-              },10)
+              // setTimeout(() => {
+              //   location.reload()
+              // },10)
             },2000)
           } else {
             this.$message({
@@ -204,11 +204,11 @@
     margin-top: 20px;
   }
 
-  /deep/ .el-dialog {
+  div/deep/ .el-dialog {
     width: 500px;
   }
 
-  /deep/ .el-input {
+  div/deep/ .el-input {
     width: 280px!important;
   }
 </style>

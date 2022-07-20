@@ -9,16 +9,33 @@ export function userInfo() {
   })
 }
 
-// 删除图片接口
-export function deleteImg(filename) {
+// 上传图片
+export function uploadImg(formData) {
   return request({
-    url: '/upload/image',
+    url: '/file/img',
+    method: 'post',
+    data: formData, // 切记data不能加{}
+    transformRequest: [
+      data => data
+    ],
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
+
+// 删除图片接口
+export function deleteImg(filename, type) {
+  return request({
+    url: '/file/img',
     method: 'delete',
     data: {
-      filename
+      filename,
+      type 
     },
     params: {
-      filename
+      filename,
+      type
     }
   })
 }

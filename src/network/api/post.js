@@ -30,3 +30,14 @@ export function getCount(userId) {
     }
   })
 }
+
+// 查看帖子详情
+export function getPostDetail(id) {
+  return request({
+    url: '/discussPost' + '/' + id,
+    method: 'get',
+    params: {
+      id
+    }
+  })
+}

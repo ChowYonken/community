@@ -11,7 +11,7 @@
           </div>
           <span class="tagTitleList">
               <i class="iconfont icon-tubiao_rili"></i>
-              <span>加入社区i天</span>
+              <span>加入社区{{dateDiff}}天</span>
           </span>
         </div>
       </div>
@@ -33,32 +33,52 @@
       return {
         default_img: require("@/assets/img/defaultImg.jpg"), // 默认头像
         dialogImageUrl: '',
-        name: ''
+        name: '',
+        joinDay: '', // 加入社区天数
+        createTime: '' // 用户创建日期
       }
     },
-    mounted() {
-      // 获取用户信息
-      userInfo()
-        .then(res => {
-          // this.form.selectedOptions = []
-          this.dialogImageUrl = res.data.data.avatar
-          this.name = res.data.data.nickname
-        })
-        .catch(err => {
-          console.log(err)
-        })
+    created() {
+      this.getUserInfo()
+    },
+    computed: {
+      // 计算日期天数
+      dateDiff() {
+			 	var date2 = new Date();
+			 	var date1 = new Date(Date.parse(this.joinDay.replace(/-/g,   "/")));
+			 	var iDays = parseInt(Math.abs(date2.getTime()- date1.getTime()) /1000/60/60/24); 
+			 	return iDays;
+			 },
     },
     methods: {
       // 点击编辑跳转账号设置页面
       toSetup() {
         this.$router.push('/setup')
       },
+      getUserInfo() {
+        let that = this
+        // 获取用户信息
+        userInfo()
+          .then(res => {
+            // this.form.selectedOptions = []
+            this.dialogImageUrl = res.data.data.avatar
+            this.name = res.data.data.nickname
+            let time = res.data.data.createTime
+            // 将获取的时间改为 yyyy-mm-dd 格式
+            let appointDate = /\d{4}-\d{1,2}-\d{1,2}/g.exec(time)[0];
+            that.joinDay = appointDate
+          })
+          .catch(err => {
+            console.log(err)
+          })
+      },
+      
     },
   }
 </script>
 
 <style scoped>
-  /deep/ .el-card__body, .el-main {
+  div/deep/ .el-card__body, .el-main {
     padding: 0;
   }
 

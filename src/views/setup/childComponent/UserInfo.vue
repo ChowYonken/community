@@ -6,10 +6,10 @@
         <el-form-item label="头像" prop="dialogImageUrl" :label-width="formLabelWidth">
           <el-upload
             class="avatar-uploader"
-            action="http://192.168.149.198:8090/upload/image"
+            action="#"
+            :http-request="uploadAvatar"
             :headers="config"
             :show-file-list="false"
-            :on-success="handleAvatarSuccess"
             :before-upload="beforeAvatarUpload"
             @click.native="updateImage"
             name="image">
@@ -42,7 +42,7 @@
 
 <script>
 
-  import {deleteImg} from '@/network/api/userEdit'
+  import {deleteImg, uploadImg} from '@/network/api/userEdit'
   import {editUser, userInfo} from "@/network/api/userEdit";
   import { CodeToText, regionData, TextToCode } from 'element-china-area-data' //导入地图数据
 
@@ -65,7 +65,8 @@
           area: ''
         },
         formLabelWidth: '120px',
-        options: regionData
+        options: regionData,
+        avatarType: 1  // 上传头像
       }
     },
     mounted() {
@@ -87,20 +88,33 @@
         })
     },
     methods: {
-      // 上传头像
-      handleAvatarSuccess(res, file) {
-        console.log(res)
-        if(this.imageUrl === '' || this.imageUrl === null) {
-          // 将后端发送的地址赋值到我们需要显示的img中的src动态绑定的参数中
-          this.imageUrl = res.data
-          // 将图片地址绑定到我们的form表单数据中 后期存入数据库中
-          this.form.dialogImageUrl = res.data
-          // 将图片的名称截取并保存到imageName中(截取url地址最后一个斜杠后面的图片名称)
-          let url = res.data
-          let index = url.lastIndexOf("\/")
-          this.imageName = url.substring(index + 1,url.length)
-        }else {
-        }
+      uploadAvatar(param) {
+        var fileName = param.file
+        console.log(fileName)
+        const formData = new FormData()
+        formData.append('img', fileName)
+        formData.append('type', this.avatarType)
+        let that = this
+        uploadImg(formData)
+        .then(res => {
+          console.log(res);
+          if(that.imageUrl === '' || that.imageUrl === null) {
+            // // 将后端发送的地址赋值到我们需要显示的img中的src动态绑定的参数中
+            that.imageUrl = res.data.data
+            // // 将图片地址绑定到我们的form表单数据中 后期存入数据库中
+            that.form.dialogImageUrl = res.data.data
+            // 将图片的名称截取并保存到imageName中(截取url地址最后一个斜杠后面的图片名称)
+            let url = res.data.data
+            let index = url.lastIndexOf("\/")
+            that.imageName = url.substring(index + 1,url.length)
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        })
+        setTimeout(() =>{
+          console.log(that.imageName);
+        },5000) 
       },
       // 图片格式
       beforeAvatarUpload(file) {
@@ -117,14 +131,14 @@
       },
       // 点击取消保存时，将图片在七牛云删除
       removeImage() {
-        deleteImg(this.imageName)
+        let that = this
+        deleteImg(that.imageName, that.avatarType)
           .then(res => {
             console.log(res)
-            this.dialogFormVisible = false
             // 删除后将储存图片的data设置为空
-            this.imageName = ''
-            this.imageUrl = ''
-            this.form.dialogImageUrl = ''
+            that.imageName = ''
+            that.imageUrl = ''
+            that.form.dialogImageUrl = ''
           })
           .catch(err => {
             console.log(err)
@@ -132,16 +146,20 @@
       },
       // 修改头像时，将上一张图片删除
       updateImage() {
-        deleteImg(this.imageName)
+        let that = this
+        if(that.imageName === '') {
+          deleteImg(that.imageName, that.avatarType)
           .then(res => {
+            console.log(res);
             // 删除后将储存图片的data设置为空
-            this.imageName = ''
-            this.imageUrl = ''
-            this.form.dialogImageUrl = ''
+            that.imageName = ''
+            that.imageUrl = ''
+            that.form.dialogImageUrl = ''
           })
           .catch(err => {
             console.log(err)
           })
+        }
       },
       // 获取省市区级联数据
       handleChange (value) {
@@ -161,7 +179,8 @@
         this.dialogFormVisible = false
         editUser(this.form.name,this.form.radio,this.form.address,this.form.dialogImageUrl)
           .then(res => {
-            location.reload();
+            // location.reload();
+            console.log(res);
           })
           .catch(err => {
             console.log(err)
@@ -200,11 +219,11 @@
     margin: 60px 0 0 200px;
   }
 
-  /deep/ el-form {
+  div/deep/ el-form {
     display: flex!important;
   }
 
-  /deep/ .avatar-uploader .el-upload {
+  div/deep/ .avatar-uploader .el-upload {
     width: 51px;
     height: 51px;
     border: 1px dashed #d9d9d9;
@@ -215,11 +234,11 @@
     line-height: 50px;
   }
 
-  /deep/ .avatar-uploader .el-upload:hover {
+  div/deep/ .avatar-uploader .el-upload:hover {
     border-color: #409EFF;
   }
 
-  /deep/ .avatar-uploader .el-upload img {
+  div/deep/ .avatar-uploader .el-upload img {
     width: 100%;
     height: 100%;
   }
@@ -228,15 +247,15 @@
     font-size: 30px;
   }
 
-  /deep/ .el-input {
+  div/deep/ .el-input {
     width: 400px;
   }
 
-  /deep/ .el-form-item__label {
+  div/deep/ .el-form-item__label {
     padding: 0 20px 0 0;
   }
 
-  /deep/ .el-form-item {
+  div/deep/ .el-form-item {
     margin-bottom: 45px;
   }
 </style>

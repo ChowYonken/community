@@ -72,7 +72,7 @@
     font-size: 14px;
   }
 
-  /deep/ .el-badge__content.is-fixed {
+  div/deep/ .el-badge__content.is-fixed {
     position: absolute;
     top: 10px;
     right: -3px;

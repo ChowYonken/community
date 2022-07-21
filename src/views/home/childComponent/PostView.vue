@@ -64,7 +64,6 @@
         let that = this;
         getShowPost(userId,currentIndex,pageSize,activeName)
           .then(res => {
-            console.log(res)
             that.allIntelligence = res.data.data
           })
           .catch(err => {

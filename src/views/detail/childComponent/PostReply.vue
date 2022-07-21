@@ -42,7 +42,7 @@
       }
     },
     mounted() {
-      getReply(this.currentL,this.size,this.postId)
+      getReply(this.currentL, this.size, this.postId)
       .then(res => {
         console.log(res)
       })

@@ -1,7 +1,6 @@
 <template>
   <div class="msg-container">
-    <el-card class="content" shadow="always">
-      <div class="MsgList">
+    <div class="MsgList" v-for="(item, index) in msgList">
         <!--头像-->
         <div class="touxiang">
           <router-link to="/profile">
@@ -12,46 +11,87 @@
         </div>
         <!--文本-->
         <div class="text">
-          <span class="text-content">
-            【即将结束】 掘金会员1元抵100优惠券即将结束，倒计时7天，马上恢复原价！不要犹豫，立刻点击链接抢购，手慢无！
-            【即将结束】 掘金会员1元抵100优惠券即将结束，倒计时7天，马上恢复原价！不要犹豫，立刻点击链接抢购，手慢无！
-            【即将结束】 掘金会员1元抵100优惠券即将结束，倒计时7天，马上恢复原价！不要犹豫，立刻点击链接抢购，手慢无！
-            【即将结束】 掘金会员1元抵100优惠券即将结束，倒计时7天！马上恢复原价！不要犹豫，立刻点击链接抢购，手慢无！
+          <!-- entity_type===1 是点赞帖子 -->
+          <span class="text-content" v-if="item.entity_type===1">
+            用户
+            <span class="text-content-nickname">{{item.nickname}}</span>
+            赞了你的帖子
+            <span class="text-content-post" @click="postClick(index)">{{item.post_title}}</span>
           </span>
+          <!-- entity_type===2 是点赞评论 -->
+          <span class="text-content" v-else-if="item.entity_type===2">2</span>
+          <!-- entity_type = fasle 只有content -->
+          <span class="text-content" v-else>{{item.content}}</span>
           <!--时间-->
-          <span class="time">20小时前</span>
+          <span class="time">{{getDateDiff(item.create_time)}}</span>
         </div>
       </div>
-    </el-card>
-    <el-card class="content" shadow="always">
-      <div class="MsgList">
-        <!--头像-->
-        <div class="touxiang">
-          <router-link to="/profile">
-            <span>
-              <img src="@/assets/img/touxiang.jpg" alt="">
-            </span>
-          </router-link>
-        </div>
-        <!--文本-->
-        <div class="text">
-          <span class="text-content">
-            【即将结束】 掘金会员1元抵100优惠券即将结束，倒计时7天，马上恢复原价！不要犹豫，立刻点击链接抢购，手慢无！
-            【即将结束】 掘金会员1元抵100优惠券即将结束，倒计时7天，马上恢复原价！不要犹豫，立刻点击链接抢购，手慢无！
-            【即将结束】 掘金会员1元抵100优惠券即将结束，倒计时7天，马上恢复原价！不要犹豫，立刻点击链接抢购，手慢无！
-            【即将结束】 掘金会员1元抵100优惠券即将结束，倒计时7天！马上恢复原价！不要犹豫，立刻点击链接抢购，手慢无！
-          </span>
-          <!--时间-->
-          <span class="time">20小时前</span>
-        </div>
-      </div>
-    </el-card>
   </div>
 </template>
 
 <script>
   export default {
-    name: "MsgList"
+    name: "MsgList",
+    props: {
+      msgList: {
+        type: Array,
+        default() {
+          return []
+        }
+      }
+    },
+    data() {
+      return {
+      }
+    },
+    computed: {
+      // 时间戳转化
+      getDateDiff() {
+        return function(dateTimeStamp) {
+          if(dateTimeStamp) {
+            var result = ''
+            var minute = 1000 * 60
+            var hour = minute * 60
+            var day = hour * 24
+            var month = day * 30
+            var now = new Date().getTime()
+            var diffValue = now - dateTimeStamp
+            if (diffValue < 0) return
+            var monthC = diffValue / month
+            var weekC = diffValue / (7 * day)
+            var dayC = diffValue / day
+            var hourC = diffValue / hour
+            var minC = diffValue / minute
+            if (monthC >= 1) {
+              result = "" + parseInt(monthC) + "月前"
+            }
+            else if (weekC>=1) {
+              result = "" + parseInt(weekC) + "周前"
+            }
+            else if (dayC >= 1) {
+              result = ""+ parseInt(dayC) + "天前"
+            }
+            else if (hourC >= 1){
+              result = "" + parseInt(hourC) + "小时前"
+            }
+            else if (minC >= 1) {
+              result = ""+ parseInt(minC) + "分钟前"
+            } else {
+              result = "刚刚"
+            }
+            return result
+          }
+        }
+      }
+    },
+    methods: {
+      // 点击文章跳转对应详情页
+      postClick(index) {
+        console.log('详情页');
+        console.log(index);
+        this.$router.push('/discussPost/' + this.msgList[index].post_id)
+      }
+    }
   }
 </script>
 
@@ -60,14 +100,19 @@
     margin-top: 145px;
   }
 
-  .content {
+  /* .content {
     width: 960px;
     margin: 5px auto 5px;
     background-color: #fff;
-  }
+  } */
 
   .MsgList {
     display: flex;
+    width: 960px;
+    margin: 5px auto 5px;
+    background-color: #fff;
+    padding: 20px 20px 15px 20px;
+    box-shadow: 0 2px 12px 0 rgb(0 0 0 / 10%);
   }
 
   .MsgList .touxiang {
@@ -88,6 +133,20 @@
   .MsgList .text {
     width: 800px;
     overflow: hidden;
+  }
+
+  .MsgList .text .text-content {
+    display: block;
+    min-height: 40px;
+    margin-top: 8px;
+  }
+
+  .MsgList .text .text-content .text-content-nickname {
+    font-weight: 700;
+  }
+
+  .MsgList .text .text-content .text-content-post {
+    color: #409EFF
   }
 
   .MsgList .text .time {

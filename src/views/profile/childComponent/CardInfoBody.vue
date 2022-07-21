@@ -66,7 +66,7 @@
     padding: 8px 20px;
   }
 
-  /deep/ .el-tabs__item {
+  div/deep/ .el-tabs__item {
     font-weight: 700;
   }
 
@@ -123,7 +123,7 @@
     line-height: 25px;
   }
 
-   /deep/ .el-card__body, .el-main {
+   div/deep/ .el-card__body, .el-main {
       padding: 0;
    }
 </style>

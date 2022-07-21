@@ -16,7 +16,7 @@
     :winBarConfig="winBarConfig"
     :toolConfig="tool"
   />
-</template >
+</template>
 
 <script>
 
@@ -215,7 +215,7 @@
 </script>
 
 <style scoped>
-  /deep/.toolIcon[data-v-b4bb0df6] {
+  div/deep/.toolIcon[data-v-b4bb0df6] {
     padding-left: 6px;
     font-size: 25px;
     color: #888a91;

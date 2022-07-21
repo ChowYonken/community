@@ -26,6 +26,7 @@
 <script>
 
   import {userInfo} from "@/network/api/userEdit";
+  import {getFollowNum} from "@/network/api/user";
 
   export default {
     name: "CardInfoContainer",
@@ -35,11 +36,15 @@
         dialogImageUrl: '',
         name: '',
         joinDay: '', // 加入社区天数
-        createTime: '' // 用户创建日期
+        createTime: '', // 用户创建日期
+        uid: '' // 获取用户id
       }
     },
     created() {
+      // 获取用户信息
       this.getUserInfo()
+      // 获取用户关注人数
+      this._getFollowNum(this.uid)
     },
     computed: {
       // 计算日期天数
@@ -60,10 +65,13 @@
         // 获取用户信息
         userInfo()
           .then(res => {
+            console.log(res);
             // this.form.selectedOptions = []
-            this.dialogImageUrl = res.data.data.avatar
-            this.name = res.data.data.nickname
-            let time = res.data.data.createTime
+            let data = res.data.data
+            this.dialogImageUrl = data.avatar
+            this.name = data.nickname
+            this.uid = data.id
+            let time = data.createTime
             // 将获取的时间改为 yyyy-mm-dd 格式
             let appointDate = /\d{4}-\d{1,2}-\d{1,2}/g.exec(time)[0];
             that.joinDay = appointDate
@@ -72,7 +80,16 @@
             console.log(err)
           })
       },
-      
+      // 获取用户关注总人数
+      _getFollowNum(uid) {
+        getFollowNum(uid)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+      }
     },
   }
 </script>

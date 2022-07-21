@@ -31,16 +31,16 @@
         <span>{{content}}</span>
       </div>
       <ul class="operate" ref="operate">
-        <li class="zan common"  @click="zanClick">
-          <i class="iconfont icon-dianzan" :class="{active: zanCurrent}"></i>
+        <li class="zan common" @click="_zanClick">
+          <i class="iconfont icon-dianzan" :class="{active: isLike}"></i>
           <span>点赞（{{likeCount}}）</span>
         </li>
         <li class="reply common" @click="toClick">
           <i class="iconfont icon-pinglun"></i>
           <span>评论（{{commentCount}}）</span>
         </li>
-        <li class="like common">
-          <i class="iconfont icon-shoucang" :class="{active2: likeCurrent}" @click="likeClick"></i>
+        <li class="like common"  @click="saveClick">
+          <i class="iconfont icon-shoucang" :class="{active2: isSave}"></i>
           <span>收藏</span>
         </li>
         <li class="share common">
@@ -55,26 +55,31 @@
 <script>
 
   import {getPostDetail} from "@/network/api/post";
+  import {clickLike} from "@/network/api/user"
 
   export default {
     name: "PostContent",
     data() {
       return {
         id: null, // 保存本帖子id
-        zanCurrent: false,
-        likeCurrent: false,
+        entityId: null, // 对应实体的id
+        entityType: "1", // 1-对应帖子类型
+        isLike: '',
+        isSave: '',
         author: '', // 作者名字
         commentCount: null, // 评论数
         content: '', // 帖子内容
         likeCount: null, // 点赞数
         createTime: '', // 发布帖子时间
         plate: '', // 帖子类型
-        title: '', // 帖子标题
+        title: '' // 帖子标题
       }
     },
     created() {
       // 保存本帖子的id
       this.id = this.$route.params.id
+      // 用于当做点赞网络请求的对应实体id
+      this.entityId = this.$route.params.id
       // 请求帖子的详情信息
       if(this.id) {
         this.getPost(this.id)
@@ -88,17 +93,32 @@
         this.id = this.$route.params.id
         // 请求帖子的详情信息
         if(this.id) {
+          // 可以实时获取isLike数据
           this.getPost(this.id)
         }
       }
     },
     methods: {
-      zanClick() {
+      // 点赞
+      _zanClick() {
         this.zanCurrent = !this.zanCurrent
+        // 将entityType entityId转为formData格式
+        const formData = new FormData()
+        formData.append('entityType', this.entityType)
+        formData.append('entityId', this.entityId)
+        clickLike(this.id, formData)
+        .then(res => {
+          this.getPost(this.id)
+        })
+        .catch(err => {
+          console.log(err);
+        })
       },
-      likeClick() {
-        this.likeCurrent = !this.likeCurrent
+      // 收藏
+      saveClick() {
+        this.saveCurrent = !this.saveCurrent
       },
+      // 点击评论跳转到评论输入框
       toClick() {
         window.scrollTo({
           top: this.$refs['operate'].offsetTop + 55,
@@ -117,6 +137,7 @@
           this.createTime = data.createTime
           this.plate = data.plate
           this.title = data.title
+          this.isLike = data.isLike
         })
       }
     }

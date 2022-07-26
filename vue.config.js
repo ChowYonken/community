@@ -6,6 +6,7 @@ module.exports = {
     // public: '172.20.10.5'
   },
   configureWebpack: {
+    devtool: 'inline-source-map',
     resolve: {
       alias: {
         'assets': '@/assets',

@@ -67,7 +67,7 @@
         centerDialogVisible: false,
         title: '',
         category: '',
-        options: []
+        options: ["影视圈", "娱乐圈", "音乐圈", "综艺圈"]
       }
     },
     methods: {
@@ -95,7 +95,7 @@
     margin: 0 auto;
   }
 
-  /deep/ .el-button--primary {
+  div/deep/ .el-button--primary {
     width: 190px;
     height: 36px;
   }

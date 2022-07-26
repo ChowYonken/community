@@ -4,7 +4,7 @@
          :class="{active: currentIndex === index}"
          @click="itemClick(index)">
       <span>
-        <el-badge :value="12" class="item">
+        <el-badge class="item">
           {{item}}
         </el-badge>
       </span>

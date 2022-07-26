@@ -6,7 +6,7 @@ const CommunityPage = () => import('@/views/home/CommunityPage')
 const DetailPost = () => import('@/views/detail/DetailPost')
 const Login = () => import('@/views/auth/Login')
 const Register = () => import('@/views/auth/Register')
-const CreatePost = () => import('@/views/post/CreatePost')
+const PostCreate = () => import('@/views/post/PostCreate')
 const Profile = () => import('@/views/profile/ProfilePage')
 const Topic = () => import('@/views/topic/Topic')
 const Message = () => import('@/views/message/Message')
@@ -47,7 +47,7 @@ const routes = [
   // 发布
   {
     path: '/post',
-    component: CreatePost
+    component: PostCreate
   },
   // 个人主页
   {

@@ -19,7 +19,14 @@
             <span class="text-content-post" @click="postClick(index)">{{item.post_title}}</span>
           </span>
           <!-- entity_type===2 是点赞评论 -->
-          <span class="text-content" v-else-if="item.entity_type===2">2</span>
+          <span class="text-content" v-else-if="item.entity_type===2">
+            <span>
+              用户 {{item.nickname}} 赞了你在文章 
+              <span class="text-content-post" @click="postClick(index)">{{item.post_title}}</span>
+               下的评论
+            </span>
+            <span class="comment-content">{{item.comment_content}}</span>
+          </span>
           <!-- entity_type = fasle 只有content -->
           <span class="text-content" v-else>{{item.content}}</span>
           <!--时间-->
@@ -87,8 +94,6 @@
     methods: {
       // 点击文章跳转对应详情页
       postClick(index) {
-        console.log('详情页');
-        console.log(index);
         this.$router.push('/discussPost/' + this.msgList[index].post_id)
       }
     }
@@ -99,12 +104,6 @@
   .msg-container {
     margin-top: 145px;
   }
-
-  /* .content {
-    width: 960px;
-    margin: 5px auto 5px;
-    background-color: #fff;
-  } */
 
   .MsgList {
     display: flex;
@@ -139,10 +138,17 @@
     display: block;
     min-height: 40px;
     margin-top: 8px;
+    font-size: 14px;
   }
 
-  .MsgList .text .text-content .text-content-nickname {
-    font-weight: 700;
+  .MsgList .text .text-content .comment-content {
+    display: block;
+    width: 760px;
+    height: 40px;
+    line-height: 40px;
+    background-color: #f1ecec94;
+    padding-left: 10px;
+    margin-top: 10px;
   }
 
   .MsgList .text .text-content .text-content-post {

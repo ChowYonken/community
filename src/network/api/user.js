@@ -1,5 +1,16 @@
 import request from "@/network/request";
 
+// 获取用户信息
+export function getUserInfo(userId) {
+  return request({
+    url: '/user' + '/' + userId,
+    method: 'get',
+    params: {
+      userId
+    }
+  })
+}
+
 // 点赞帖子/评论
 export function clickLike(post_id, formData) {
   return request({
@@ -16,6 +27,19 @@ export function clickLike(post_id, formData) {
 }
 
 // 关注用户/话题
+export function clickFollow(formData) {
+  return request({
+    url: '/follow',
+    method: 'post',
+    data: formData, // 切记data不能加{}
+    transformRequest: [
+      data => data
+    ],
+    headers: {
+      'Content-Type': 'multipart/form-data'
+    }
+  })
+}
 
 // 获取用户关注总人数
 export function getFollowNum(uid) {
@@ -32,3 +56,43 @@ export function getFollowNum(uid) {
 }
 
 // 获取用户粉丝总人数
+export function getFansNum(uid) {
+  return request({
+    url: '/follow/fans' + '/' + uid,
+    method: 'get',
+    data: {
+      uid
+    },
+    params: {
+      uid
+    }
+  })
+}
+
+// 获取用户关注列表
+export function getFollowList(uid) {
+  return request({
+    url: '/follow/follower' + '/' + uid,
+    method: 'get',
+    data: {
+      uid
+    },
+    params: {
+      uid
+    }
+  })
+}
+
+// 获取用户粉丝列表
+export function getFansList(uid) {
+  return request({
+    url: '/follow/fans' + '/' + uid,
+    method: 'get',
+    data: {
+      uid
+    },
+    params: {
+      uid
+    }
+  })
+}

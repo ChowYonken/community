@@ -88,7 +88,6 @@
     watch: {
       //监听相同路由下参数变化的时候，从而实现异步刷新
       '$route' (to, from) {
-        //你在create里的方法
         // 保存本帖子的id
         this.id = this.$route.params.id
         // 请求帖子的详情信息

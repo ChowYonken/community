@@ -60,9 +60,9 @@
       toSetup() {
         this.$router.push('/setup')
       },
+      // 获取用户信息
       getUserInfo() {
         let that = this
-        // 获取用户信息
         userInfo()
           .then(res => {
             console.log(res);

@@ -7,7 +7,7 @@
 <template>
   <div id="message">
     <tab-control
-      :titles="['评论信息', '点赞消息', '关注消息', '系统消息']"
+      :titles="['评论消息', '点赞消息', '关注消息', '系统消息']"
       class="tab-control" 
       @tabClick="tabClick"/>
     <!--有数据显示-->
@@ -55,7 +55,6 @@
         let that = this
         getSystemMsg(that.current, that.size)
         .then(res => {
-          console.log(res);
           that.allIntelligence = res.data.data
           if(that.allIntelligence.length !== 0) {
             that.isData = true
@@ -70,7 +69,6 @@
         let that = this
         getCommentMsg(that.current,that.size)
         .then(res => {
-          console.log(res);
           that.allIntelligence = res.data.data
           // 判断是否为空 如果不为空 将isData设为true
           if(that.allIntelligence.length !== 0) {
@@ -86,7 +84,6 @@
         let that = this
         getFollowMsg(that.current,that.size)
         .then(res => {
-          console.log(res);
           that.allIntelligence = res.data.data
           // 判断是否为空 如果不为空 将isData设为true
           if(that.allIntelligence.length !== 0) {
@@ -102,7 +99,6 @@
         let that = this
         getLikeMsg()
         .then(res => {
-          console.log(res);
           that.allIntelligence = res.data.data
           // 判断是否为空 如果不为空 将isData设为true
           if(that.allIntelligence.length !== 0) {
@@ -117,7 +113,6 @@
       tabClick(index) {
         // 每次点击后 将isData设为false
         this.isData = false
-        console.log(index);
         // 根据不同的索引值调用不同的网络请求
         if(index === 3) {
           this._getSystemMsg()

@@ -145,7 +145,7 @@
     padding: 0 20px;
     background-color: white;
     box-shadow: 0 2px 5px 0 rgba(0,0,0,0.06);
-    z-index: 100;
+    z-index: 9999;
   }
 
   #header .logo {

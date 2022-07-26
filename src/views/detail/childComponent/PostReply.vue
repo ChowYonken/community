@@ -5,7 +5,7 @@
                @doChidSend="doChidSend"
                :commentList="commentList"
                :commentNum="commentNum"
-               :label="label"
+               :label="label" 
                :avatar="avatar"/>
     </el-card>
   </div>
@@ -26,31 +26,50 @@
         // 标签名
         label: '',
         // 头像
-        avatar: '',
+        avatar: "https://s1.ax1x.com/2022/06/10/Xc9lUf.png",
         // 评论条数
         commentNum: 0,
         // 评论列表
-        commentList: [
-
-        ],
+        commentList: [],
         // 当前页码
         currentL: 1,
         // 页码大小
         size: 20,
         // 帖子Id
-        postId: 1
+        postId: null,
+        // 评论用户
+        commentUser: {
+          nickName: '',
+          avatar: ''
+        }
       }
     },
-    mounted() {
-      getReply(this.currentL, this.size, this.postId)
-      .then(res => {
-        console.log(res)
-      })
-      .catch(err => {
-        console.log(err)
-      })
+    created() {
+      this.postId = this.$route.params.id
+      //获取评论
+      this._getReply()
+    },
+    watch: {
+      '$route' (to, from) {
+        if(from.path === '/home' || from.path ==='message') {
+          // 保存本帖子的id
+          this.postId = this.$route.params.id
+          //获取评论
+          this._getReply()
+        }
+      }
     },
     methods: {
+      _getReply() {
+        getReply(this.current, this.size, this.postId)
+        .then(res => {
+          console.log(res)
+          this.commentList = res.data.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+      },
       // 初始文本框发送事件
       doSend(content) {
         console.log(content)

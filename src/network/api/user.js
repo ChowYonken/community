@@ -7,6 +7,9 @@ export function getUserInfo(userId) {
     method: 'get',
     params: {
       userId
+    },
+    data: {
+      userId
     }
   })
 }
@@ -37,34 +40,6 @@ export function clickFollow(formData) {
     ],
     headers: {
       'Content-Type': 'multipart/form-data'
-    }
-  })
-}
-
-// 获取用户关注总人数
-export function getFollowNum(uid) {
-  return request({
-    url: '/follow/follower/count' + '/' + uid,
-    method: 'get',
-    data: {
-      uid
-    },
-    params: {
-      uid
-    }
-  })
-}
-
-// 获取用户粉丝总人数
-export function getFansNum(uid) {
-  return request({
-    url: '/follow/fans' + '/' + uid,
-    method: 'get',
-    data: {
-      uid
-    },
-    params: {
-      uid
     }
   })
 }

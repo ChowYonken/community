@@ -1,10 +1,10 @@
 <template>
   <el-card class="content" shadow="always">
     <el-tabs v-model="activeName" @tab-click="tabClick">
-      <el-tab-pane label="最新主题" name="1">
+      <el-tab-pane label="最热主题" name="1">
         <post-list :post-list="allIntelligence"/>
       </el-tab-pane>
-      <el-tab-pane label="最热主题" name="2">
+      <el-tab-pane label="最新主题" name="2">
         <post-list :post-list="allIntelligence"/>
       </el-tab-pane>
     </el-tabs>

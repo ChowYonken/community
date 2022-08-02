@@ -12,6 +12,18 @@ import Router from 'vue-router'
 // 引入iconfont库
 import "./assets/css/iconcss/iconfont.css";
 import './assets/css/iconcss/iconfont.js'
+// vue-markdown渲染
+import 'github-markdown-css/github-markdown.css'
+// 添加代码高亮效果
+import 'github-markdown-css/github-markdown.css'
+import hljs from 'highlight.js'
+
+Vue.directive('highlight', function (el) {
+  const blocks = el.querySelectorAll('pre code')
+  blocks.forEach(block => {
+    hljs.highlightBlock(block)
+  })
+})
 
 Vue.config.productionTip = false
 

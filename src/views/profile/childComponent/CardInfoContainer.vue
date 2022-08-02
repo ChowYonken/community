@@ -17,7 +17,8 @@
       </div>
       <!--编辑资料-->
       <div class="rightInfo">
-        <el-button type="primary" plain @click="toSetup" class="edit">编辑资料</el-button>
+        <el-button type="primary" plain @click="toSetup()" class="edit" v-if="this.uid === this.id">编辑资料</el-button>
+        <el-button type="success" plain @click="_clickFollow()" class="fllow" v-else>关注</el-button>
       </div>
     </div>
   </el-card>
@@ -26,7 +27,7 @@
 <script>
 
   import {userInfo} from "@/network/api/userEdit";
-  import {getFollowNum} from "@/network/api/user";
+  import {clickFollow, getUserInfo} from "@/network/api/user";
 
   export default {
     name: "CardInfoContainer",
@@ -37,14 +38,27 @@
         name: '',
         joinDay: '', // 加入社区天数
         createTime: '', // 用户创建日期
-        uid: '' // 获取用户id
+        uid: '', // 获取登录用户id
+        id: '', // 获取当前页面用户id
+        entityType: 1, // 实体类型：1-用户；2-话题 
       }
     },
     created() {
-      // 获取用户信息
-      this.getUserInfo()
-      // 获取用户关注人数
-      this._getFollowNum(this.uid)
+      // 获取用户信息和当前登录用户的信息
+      this._getUserInfo()
+      // 获取url的id
+      this.id = Number(this.$route.params.id)
+    },
+    watch: {
+      //监听相同路由下参数变化的时候，从而实现异步刷新
+      '$route' (to, from) {
+        // 保存本帖子的id
+        this.id = Number(this.$route.params.id)    
+        if(this.id) {
+          // 获取用户信息和当前登录用户的信息
+          this._getUserInfo()
+        }
+      }
     },
     computed: {
       // 计算日期天数
@@ -60,37 +74,48 @@
       toSetup() {
         this.$router.push('/setup')
       },
-      // 获取用户信息
-      getUserInfo() {
-        let that = this
-        userInfo()
-          .then(res => {
-            console.log(res);
-            // this.form.selectedOptions = []
-            let data = res.data.data
-            this.dialogImageUrl = data.avatar
-            this.name = data.nickname
-            this.uid = data.id
-            let time = data.createTime
-            // 将获取的时间改为 yyyy-mm-dd 格式
-            let appointDate = /\d{4}-\d{1,2}-\d{1,2}/g.exec(time)[0];
-            that.joinDay = appointDate
-          })
-          .catch(err => {
-            console.log(err)
-          })
+      // 获取用户信息和当前登录用户的信息
+      async _getUserInfo() {
+        await userInfo()
+        .then(res => {
+          let data = res.data.data
+          this.uid = data.id
+        })
+        .catch(err => {
+          console.log(err)
+        });
+        await getUserInfo(this.id)
+        .then(res => {
+          let data = res.data.data
+          this.dialogImageUrl = data.avatar
+          this.name = data.nickname
+          let time = data.createTime
+          // 将获取的时间改为 yyyy-mm-dd 格式
+          let appointDate = /\d{4}-\d{1,2}-\d{1,2}/g.exec(time)[0];
+          this.joinDay = appointDate
+        })
+        .catch(err => {
+          console.log(err);
+        })
       },
-      // 获取用户关注总人数
-      _getFollowNum(uid) {
-        getFollowNum(uid)
+      // 关注用户
+      _clickFollow() {
+        const formData = new FormData()
+        formData.append("entityType", this.entityType)
+        formData.append("entityId", this.id)
+        clickFollow(formData)
         .then(res => {
           console.log(res);
+          this.$message({
+            message: '关注成功',
+            type: 'success'
+          })
         })
         .catch(err => {
           console.log(err);
         })
       }
-    },
+    }
   }
 </script>
 
@@ -136,7 +161,8 @@
     margin-left: 5px;
   }
 
-  .edit{
+  .edit,
+  .fllow {
     margin: 90px 0 0 130px;
   }
 

@@ -4,20 +4,19 @@
       <div class="list-item">
         <!--帖子标题-->
         <div class="info">
-          <!-- <div @click="itemClick(item)" >
-            <span class="title">{{item.title}}</span>
-          </div> -->
           <div @click="itemClick(item)" >
             <li><span class="title">{{item.title}}</span></li>
           </div>
-          <span>{{item.likeCount}}赞</span>
-          <span>{{item.commentCount}}回复</span>
+          <span>{{item.likeCount}} 赞</span>
+          <span>{{item.commentCount}} 回复</span>
         </div>
         <!--帖子分类-->
         <div class="lable">
           <router-link to="/topic">
             <span>{{item.plate}}</span>
           </router-link>
+          <!-- 发布时间 -->
+          <span class="create-time">{{getTime(item.createTime)}}</span>
         </div>
       </div>
     </div>
@@ -40,7 +39,14 @@
         
       }
     },
-    mounted() {
+    computed: {
+      getTime() {
+        return time => {
+          // 将获取的时间改为 yyyy-mm-dd 格式
+          let appointDate = /\d{4}-\d{1,2}-\d{1,2}/g.exec(time)[0];
+          return appointDate
+        }
+      }
     },
     methods: {
       itemClick(item) {
@@ -86,5 +92,9 @@
 
   .list-item .lable a:hover {
     color: #409EFF;
+  }
+  .list-item .lable .create-time {
+    color: #7B7E86;
+    margin-left: 10px;
   }
 </style>

@@ -34,14 +34,16 @@
             <el-input v-model="ruleForm.pass"
                       type="password"
                       autocomplete="off"
-                      placeholder="请输入密码"/>
+                      placeholder="请输入密码" 
+                      show-password/>
           </el-form-item>
           <!-- 确认密码表单域-->
           <el-form-item prop="checkPass">
             <el-input v-model="ruleForm.checkPass"
                       type="password"
                       autocomplete="off"
-                      placeholder="请再次输入密码"/>
+                      placeholder="请再次输入密码" 
+                      show-password/>
           </el-form-item>
           <el-form-item>
             <div class="activation">

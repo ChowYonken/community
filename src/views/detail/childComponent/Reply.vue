@@ -218,6 +218,11 @@
           this._userInfo()
           // 获取评论列表
           this._getReply()
+          // 获取评论总数
+          this._getCommentTotal()
+        }
+        if(to.path) {
+          location.reload()
         }
       }
     },
@@ -233,7 +238,6 @@
       _userInfo() {
         userInfo()
         .then(res => {
-          console.log(res);
           let data = res.data.data
           this.username = data.nickname
           this.userId = data.id
@@ -247,7 +251,6 @@
       _getReply() {
         getReply(this.current, this.size, this.postId)
         .then(res => {
-          console.log(res)
           this.comments = res.data.data
         })
         .catch(err => {
@@ -258,8 +261,7 @@
       _getCommentTotal() {
         getCommentTotal(this.postId)
         .then(res => {
-          console.log(res);
-          this.total = res.data.data
+          this.total = res.data.data.parentCommentCount
         })
         .catch(err => {
           console.log(err);

@@ -24,7 +24,7 @@
 
 <script>
 
-  import TabControl from "@/views/message/childComponent/TabControl"
+  import TabControl from "@/views/message/childComponent/TabControl.vue"
   import PostList from "@/components/content/postList/PostList"
   import MsgList from "@/components/content/msgList/MsgList"
   import {getSystemMsg, getCommentMsg, getFollowMsg, getLikeMsg} from "@/network/api/message"
@@ -39,7 +39,7 @@
     data() {
       return {
         activeName: 'follow',
-        currentIndex: 0, // 导航栏索引值]
+        currentIndex: 0, // 导航栏索引值
         isData: false, // 是否有数据
         allIntelligence: [], // 列表所有数据
         current: 1, // 当前页码

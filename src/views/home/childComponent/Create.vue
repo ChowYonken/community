@@ -98,7 +98,12 @@
       },
       // 跳转发帖子页面
       toPost() {
-        this.$router.push('./post')
+        if (this.$store.getters.getLocalStorage !== '') {
+          this.$router.push('./post')
+        } else {
+          this.$message('亲~先登录');
+          this.$router.push('./login')
+        }
       }
     }
   }

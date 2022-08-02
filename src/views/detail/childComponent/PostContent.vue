@@ -3,12 +3,12 @@
     <div class="card-info">
       <div class="leftInfo">
         <span>
-          <img src="@/assets/img/profile/touxiang.png" alt="">
+          <img :src="avatar ? avatar : default_img" alt="">
         </span>
         <div class="leftInfo-Content">
           <!--用户名-->
           <div class="title">
-            <span class="name">{{author}}</span>
+            <span class="name" @click="toUserPage()">{{author}}</span>
           </div>
           <!--发布时间-->
           <span class="time">{{createTime}}</span>
@@ -23,12 +23,12 @@
     </div>
     <div class="post-text">
       <!--标题-->
-      <div class="title">
+      <!-- <div class="title">
         <h3>{{title}}</h3>
-      </div>
+      </div> -->
       <!-- 帖子内容 -->
-      <div class="text">
-        <span>{{content}}</span>
+      <div class="text markdown-body">
+        <VueMarkdown :source="content" v-highlight/>
       </div>
       <ul class="operate" ref="operate">
         <li class="zan common" @click="_zanClick">
@@ -55,14 +55,21 @@
 <script>
 
   import {getPostDetail} from "@/network/api/post";
-  import {clickLike} from "@/network/api/user"
+  import {clickLike, getUserInfo} from "@/network/api/user"
+  import VueMarkdown from 'vue-markdown'
 
   export default {
     name: "PostContent",
+    components: {
+      VueMarkdown
+    },
     data() {
       return {
         id: null, // 保存本帖子id
         entityId: null, // 对应实体的id
+        authorId: '', // 作者id
+        default_img: require("@/assets/img/defaultImg.jpg"), // 默认头像
+        avatar: '', // 作者头像
         entityType: "1", // 1-对应帖子类型
         isLike: '',
         isSave: '',
@@ -80,10 +87,13 @@
       this.id = this.$route.params.id
       // 用于当做点赞网络请求的对应实体id
       this.entityId = this.$route.params.id
-      // 请求帖子的详情信息
-      if(this.id) {
-        this.getPost(this.id)
-      }
+      // // 请求帖子的详情信息
+      // if(this.id) {
+      //   this.getPost(this.id)
+      // }
+      // // 获取作者信息
+      // this._getUserInfo()
+      this._getInfo()
     },
     watch: {
       //监听相同路由下参数变化的时候，从而实现异步刷新
@@ -93,7 +103,7 @@
         // 请求帖子的详情信息
         if(this.id) {
           // 可以实时获取isLike数据
-          this.getPost(this.id)
+          this._getInfo()
         }
       }
     },
@@ -124,9 +134,13 @@
           behavior: "smooth"
         })
       },
-      // 请求帖子详情信息的方法
-      getPost(id) {
-        getPostDetail(id)
+      // 跳转作者的详情页
+      toUserPage() {
+        this.$router.push('/user/' + this.authorId)
+      },
+      // 获取帖子作者信息和帖子详情信息
+      async _getInfo() {
+        await getPostDetail(this.id)
         .then(res => {
           const data = res.data.data
           this.author = data.author
@@ -137,6 +151,16 @@
           this.plate = data.plate
           this.title = data.title
           this.isLike = data.isLike
+          this.authorId = data.authorId
+        });
+        await getUserInfo(this.authorId)
+        .then(res => {
+          if(this.docUrl !== res.data.data.avatar) {
+            this.avatar = res.data.data.avatar
+          }
+        })
+        .catch(err => {
+          console.log(err);
         })
       }
     }
@@ -145,7 +169,7 @@
 
 <style scoped>
   div/deep/ .el-card__body, .el-main {
-    padding: 20px 0px 20px 110px!important;
+    padding: 20px 40px 0px 40px!important;
   }
   .content {
     display: flex;
@@ -203,9 +227,9 @@
   }
 
   .post-text {
-    text-align: center;
-    background-color: #f5f5f5;
-    margin: 35px 95px 0 0;
+    /* text-align: center; */
+    /* background-color: #f5f5f5; */
+    margin-top: 35px;
     padding-bottom: 20px;
     border: 1px solid rgba(200,200,200,-0.5);
     border-radius: 30px;
@@ -221,9 +245,6 @@
     margin: 0 auto 20px;
   }
 
-  .post-text .text img {
-    margin-top: 20px;
-  }
 
   .post-text .operate {
     display: flex;
@@ -232,7 +253,7 @@
     align-items: center;
     justify-content: flex-start;
     height: 32px;
-    margin: 20px 0 20px 75px;
+    margin: 20px 0;
   }
 
   .post-text .operate .common {

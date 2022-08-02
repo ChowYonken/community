@@ -4,7 +4,8 @@
     --color-text: #666;
     --color-high-text: #ff5777;
     --color-tint: #ff8198;
-    --color-background: #f5f5f5;
+    /* --color-background: #f5f5f5; */
+    --color-background: #ECF5FF;
     --font-size: 14px;
     --line-height: 1.5;
 }
@@ -77,3 +78,21 @@ li {
   }
 }
 
+@media (prefers-color-scheme: dark){
+  .markdown-body {
+    color-scheme: light!important;
+  }
+}
+
+.markdown-body {
+  background-color: #fff!important;
+  color: #000!important;
+}
+
+.markdown-body pre {
+  background-color: #c9d1d9!important;
+}
+
+.markdown-body img {
+  max-width: 50%!important;
+}

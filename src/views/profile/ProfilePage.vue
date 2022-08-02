@@ -15,12 +15,27 @@
 
   import CardInfoContainer from "@/views/profile/childComponent/CardInfoContainer";
   import CardInfoBody from "@/views/profile/childComponent/CardInfoBody";
+  import {getUserInfo} from "@/network/api/user";
 
   export default {
     name: "ProfilePage",
     components: {
       CardInfoContainer,
       CardInfoBody
+    },
+    create() {
+      this._getUserInfo()
+    },
+    methods: {
+      _getUserInfo() {
+        getUserInfo(this.id)
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+      }
     }
   }
 </script>

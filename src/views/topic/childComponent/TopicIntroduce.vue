@@ -79,7 +79,7 @@
     font-weight: 600;
     vertical-align: middle;
   }
-  /deep/ .el-button {
+  div/deep/ .el-button {
     width: 70px;
     height: 22px;
     font-size: 14px;

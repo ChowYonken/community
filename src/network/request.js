@@ -34,7 +34,9 @@ instance.interceptors.response.use(
     if(response.status === 205) {
       // 退出登录，清空token
       this.$store.commit('removeToken');
-      this.$router.push('/home');
+      const token = localStorage.getItem('token')
+      localStorage.removeItem(token);
+      this.$router.push('/login');
       location.reload()
     }
     return response;

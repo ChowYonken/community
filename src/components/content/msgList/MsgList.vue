@@ -29,6 +29,7 @@
           </span>
           <!-- entity_type = fasle 只有content -->
           <span class="text-content" v-else>{{item.content}}</span>
+
           <!--时间-->
           <span class="time">{{getDateDiff(item.create_time)}}</span>
         </div>
@@ -89,6 +90,7 @@
             return result
           }
         }
+        return _getDateDiff(dateTimeStamp)
       }
     },
     methods: {

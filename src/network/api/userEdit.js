@@ -1,7 +1,7 @@
 import request from "@/network/request";
 import qs from 'qs'
 
-// 获取用户信息
+// 获取当前登录用户信息
 export function userInfo() {
   return request({
     url: '/user',
@@ -24,7 +24,7 @@ export function uploadImg(formData) {
   })
 }
 
-// 删除图片接口
+// 删除图片
 export function deleteImg(filename, type) {
   return request({
     url: '/file/img',

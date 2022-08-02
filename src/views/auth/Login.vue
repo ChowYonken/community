@@ -28,7 +28,8 @@
             <el-input v-model="ruleForm.pass"
                       type="password"
                       autocomplete="off"
-                      placeholder="请输入密码"/>
+                      placeholder="请输入密码" 
+                      show-password/>
           </el-form-item>
           <!-- 登录，重置 按钮表单域-->
           <el-form-item>
@@ -42,26 +43,6 @@
               <span class="forget" @click="dialogFormVisible = true">
                 <a href="javascript:;">忘记密码</a>
               </span>
-              <!--重置密码弹框-->
-              <el-dialog title="重置密码" :visible.sync="dialogFormVisible">
-                <el-form ref="form"
-                         :model="form"
-                         :rules="rules">
-                  <el-form-item prop="email">
-                    <el-input v-model="form.email"class="email-input" placeholder="请输入邮箱"></el-input>
-                  </el-form-item>
-                  <el-form-item prop="oldPwd">
-                    <el-input v-model="form.oldPwd" class="email-input" placeholder="请输入旧密码"></el-input>
-                  </el-form-item>
-                  <el-form-item prop="newPwd">
-                    <el-input v-model="form.newPwd" class="email-input" placeholder="请输入新密码"></el-input>
-                  </el-form-item>
-                  <div slot="footer" class="dialog-footer">
-                    <el-button @click="dialogFormVisible = false">取 消</el-button>
-                    <el-button type="primary" @click="dialogFormVisible = false">确 定</el-button>
-                  </div>
-                </el-form>
-              </el-dialog>
             </div>
           </el-form-item>
         </el-form>

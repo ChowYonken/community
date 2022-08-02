@@ -8,7 +8,7 @@
   <div id="setup">
     <!--返回主页-->
     <el-card class="back-home" shadow="always">
-      <router-link to="/profile">
+      <router-link to="/user">
         <span>
           <i class="el-icon-arrow-left"></i>
           返回个人主页
@@ -73,12 +73,12 @@
     display: flex;
   }
 
-  /deep/ .el-menu-vertical-demo {
+  div/deep/ .el-menu-vertical-demo {
     width: 230px;
     height: 400px;
   }
 
-  /deep/ .el-menu-item.is-active {
+  div/deep/ .el-menu-item.is-active {
     background-color: #fff!important;
   }
 

@@ -13,73 +13,20 @@
       <div class="hot-search-title">
         <span>热门搜索</span>
       </div>
-      <div class="content">
-        <router-link to="/topic">
-          <div class="hot-search-item">
-            <span class="hot-index">1</span>
-            <span class="hot-title">维金斯</span>
-          </div>
-        </router-link>
-        <router-link to="/topic">
-          <div class="hot-search-item">
-            <span class="hot-index">2</span>
-            <span class="hot-title">维金斯</span>
-          </div>
-        </router-link>
-        <router-link to="/topic">
-          <div class="hot-search-item">
-            <span class="hot-index">3</span>
-            <span class="hot-title">维金斯</span>
-          </div>
-        </router-link>
-        <router-link to="/topic">
-          <div class="hot-search-item">
-            <span class="hot-index">4</span>
-            <span class="hot-title">维金斯</span>
-          </div>
-        </router-link>
-        <router-link to="/topic">
-          <div class="hot-search-item">
-            <span class="hot-index">5</span>
-            <span class="hot-title">维金斯</span>
-          </div>
-        </router-link>
-        <router-link to="/topic">
-          <div class="hot-search-item">
-            <span class="hot-index">6</span>
-            <span class="hot-title">维金斯</span>
-          </div>
-        </router-link>
-        <router-link to="/topic">
-          <div class="hot-search-item">
-            <span class="hot-index">7</span>
-            <span class="hot-title">维金斯</span>
-          </div>
-        </router-link>
-        <router-link to="/topic">
-          <div class="hot-search-item">
-            <span class="hot-index">8</span>
-            <span class="hot-title">维金斯</span>
-          </div>
-        </router-link>
-        <router-link to="/topic">
-          <div class="hot-search-item">
-            <span class="hot-index">9</span>
-            <span class="hot-title">维金斯</span>
-          </div>
-        </router-link>
-        <router-link to="/topic">
-          <div class="hot-search-item">
-            <span class="hot-index">10</span>
-            <span class="hot-title">维金斯</span>
-          </div>
-        </router-link>
-      </div>
+      <ul>
+        <li class="hot-search-item" v-for="" @click="hotWordSearch">
+          <span class="hot-index">1</span>
+          <span class="hot-title">维金斯</span>
+        </li>
+      </ul>
     </el-card>
   </div>
 </template>
 
 <script>
+
+  import {getHotWord} from "@/network/api/search"
+
   export default {
     name: "Create",
     data() {
@@ -87,7 +34,23 @@
         isShowLogin: true // 判断登录注册是否显示
       }
     },
+    created() {
+      this._getHotWord()
+    },
     methods: {
+      // 获取24小时搜索热词
+      _getHotWord() {
+        getHotWord()
+        .then(res => {
+          console.log(res);
+        })
+        .catch(err => {
+          console.log(err);
+        })
+      }, 
+      hotWordSearch() {
+        this.$router.push('./search/' + this.keyword)
+      },
       // 跳转登录页面
       toLogin() {
         this.$router.push('./login')
@@ -120,7 +83,7 @@
   }
 
   .hot-search {
-    height: 420px;
+    min-height: 420px;
     margin-top: 20px;
   }
 
@@ -141,11 +104,7 @@
     margin-right: 13px;
   }
 
-  .content a {
-    color: #191c22;
-  }
-
-  .content a:hover .hot-title{
+  li:hover .hot-title{
     color: #409EFF;
   }
 </style>

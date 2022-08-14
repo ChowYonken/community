@@ -26,7 +26,7 @@
     components: {
       Category,
       PostView,
-      Create
+      Create,
     }
   }
 </script>

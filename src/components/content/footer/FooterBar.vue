@@ -28,6 +28,7 @@
 
 <style scoped>
   #footer-bar {
+    position: relative;
     height: 150px;
     background-color: #363636;
     color: #B5B5B5;

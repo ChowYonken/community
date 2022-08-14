@@ -1,5 +1,17 @@
 import request from "@/network/request";
 
+// 分页获取用户详情
+export function getUserPage(current, size) {
+  return request({
+    url: "/user/page/list",
+    method: "get",
+    params: {
+      current,
+      size
+    }
+  })
+}
+
 // 获取用户信息
 export function getUserInfo(userId) {
   return request({
@@ -69,5 +81,26 @@ export function getFansList(uid) {
     params: {
       uid
     }
+  })
+}
+
+// 获取用户拥有的角色
+export function getRole(userId) {
+  return request({
+    url: '/user/role',
+    method: 'get',
+    params: {
+      userId
+    }
+  })
+}
+
+
+// 给用户分配角色
+export function giveUserRole(formData) {
+  return request({
+    url: "/user/allot/role",
+    method: "post",
+    data: formData
   })
 }

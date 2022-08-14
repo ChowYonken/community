@@ -548,4 +548,9 @@
   .likeIcon {
     color: #40a0ff;
   }
+
+  div/deep/ .el-pagination {
+    float: right;
+    margin-top: 15px;
+  }
 </style>

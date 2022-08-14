@@ -8,12 +8,13 @@
     <!--话题细节-->
     <div class="topic-intro-detail">
       <div class="topic-intro-detail-title-wrap">
-        <span>#娱乐圈</span>
+        <span>#{{topicName}}</span>
         <el-button type="primary" @click="toCreatePost">发帖</el-button>
+        <el-button type="primary" @click="followTopic">关注</el-button>
       </div>
       <div class="topic-intro-detail-desc">
         <span class="topic-intro-detail-desc-title">话题介绍</span>
-        <span class="topic-intro-detail-desc-text">不饭圈、不控评、不玻璃心，要玩就玩真实的娱乐圈</span>
+        <span class="topic-intro-detail-desc-text">{{summary}}</span>
       </div>
       <div class="topic-intro-detail-desc">
         <span class="topic-intro-detail-desc-title">话题热度</span>
@@ -31,9 +32,69 @@
 </template>
 
 <script>
+
+  import {getTopicDetail} from "@/network/api/topic"
+  import {clickFollow} from "@/network/api/user"
+
   export default {
     name: "TopicIntroduce",
+    data() {
+      return {
+        topicId: null,
+        topicName: "",
+        summary: "",
+        createTime: "",
+        entityType: 2, //关注话题类型 2-话题
+      }
+    },
+    created() {
+      this.topicId = this.$route.params.id
+      this._getTopicDetail(this.topicId)
+    },
+    watch: {
+      '$route'() {
+        this.topicId = this.$route.params.id
+        this._getTopicDetail(this.topicId)
+      }
+    },
     methods: {
+      // 获取话题详情
+      _getTopicDetail(topicId) {
+        getTopicDetail(topicId)
+        .then(res => {
+          let data = res.data.data
+          this.topicName = data.name
+          this.summary = data.summary
+        })
+        .catch(err => {
+          console.log(err);
+        })
+      },
+      // 关注话题
+      _clickFollow() {
+        const formData = new FormData()
+        formData.append("entityType", this.entityType)
+        formData.append("entityId", this.topicId)
+        clickFollow(formData)
+        .then(res => {
+          console.log(res);
+          if (res.data.status === 100) {
+            this.$message({
+              type: "success",
+              message: "关注成功"
+            })
+          } else {
+            this.$message.error('关注失败，请重试');
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        })
+      },
+      // 点击关注话题
+      followTopic() {
+        this._clickFollow()
+      },
       // 跳转发表帖子页面
       toCreatePost() {
         this.$router.push('/post')

@@ -11,7 +11,7 @@
       class="tab-control" 
       @tabClick="tabClick"/>
     <!--有数据显示-->
-    <msg-list v-if="isData" :msg-list="allIntelligence"/>
+    <msg-list v-if="isData" :msg-list="allIntelligence" :tab-type="tabType"/>
     <!--无数据显示-->
     <el-card class="content" shadow="always" v-else>
       <div class="noData">
@@ -43,7 +43,8 @@
         isData: false, // 是否有数据
         allIntelligence: [], // 列表所有数据
         current: 1, // 当前页码
-        size: 20 // 页码大小
+        size: 20, // 页码大小
+        tabType: null, // tab类型
       }
     },
     created() {
@@ -111,16 +112,21 @@
       },
       // 获取导航栏的index值 并网络请求
       tabClick(index) {
+        this.tabType = null
         // 每次点击后 将isData设为false
         this.isData = false
         // 根据不同的索引值调用不同的网络请求
         if(index === 3) {
+          this.tabType = 3
           this._getSystemMsg()
         } else if(index === 2) {
+          this.tabType = 2
           this._getFollowMsg()
         } else if(index === 1) {
+          this.tabType = 1
           this._getLikeMsg()
         } else if(index === 0) {
+          this.tabType = 0
           this._getCommentMsg()
         }
       }

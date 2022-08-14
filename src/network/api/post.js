@@ -54,3 +54,51 @@ export function getPostDetail(id) {
     }
   })
 }
+
+// 删除帖子
+export function deletePost(id) {
+  return request({
+    url: '/discussPost/delete' + '/' + id,
+    method: 'delete',
+    params: {
+      id
+    }
+  })
+}
+
+// 查询拉黑帖子
+export function getBlockPost(userId, current, size) {
+  return request({
+    url: "/discussPost/list/block",
+    method: "get",
+    params: {
+      userId,
+      current,
+      size
+    }
+  })
+}
+
+// 加精帖子
+export function essencePost(postId, formData) {
+  return request({
+    url: "/discussPost/essence" + "/" + postId,
+    method: "put",
+    data: formData,
+    params: {
+      postId
+    }
+  })
+}
+
+// 拉黑帖子
+export function blockPost(postId, formData) {
+  return request({
+    url: "/discussPost/block" + "/" + postId,
+    method: "put",
+    data: formData,
+    params: {
+      postId
+    }
+  })
+}

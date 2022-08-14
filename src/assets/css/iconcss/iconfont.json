@@ -6,6 +6,83 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "4918908",
+      "name": "活跃时间段",
+      "font_class": "huoyueshijianduan",
+      "unicode": "e64d",
+      "unicode_decimal": 58957
+    },
+    {
+      "icon_id": "22910169",
+      "name": "网站",
+      "font_class": "wangzhan",
+      "unicode": "e7fe",
+      "unicode_decimal": 59390
+    },
+    {
+      "icon_id": "1183024",
+      "name": "数据统计",
+      "font_class": "shujutongji",
+      "unicode": "e65a",
+      "unicode_decimal": 58970
+    },
+    {
+      "icon_id": "30697757",
+      "name": "元数据-列表视图",
+      "font_class": "yuanshuju-liebiaoshitu",
+      "unicode": "e62b",
+      "unicode_decimal": 58923
+    },
+    {
+      "icon_id": "983874",
+      "name": "21话题管理",
+      "font_class": "huatiguanli",
+      "unicode": "e63d",
+      "unicode_decimal": 58941
+    },
+    {
+      "icon_id": "6263286",
+      "name": "用户管理",
+      "font_class": "yonghuguanli",
+      "unicode": "e659",
+      "unicode_decimal": 58969
+    },
+    {
+      "icon_id": "11121397",
+      "name": "角色管理",
+      "font_class": "jiaoseguanli",
+      "unicode": "e62d",
+      "unicode_decimal": 58925
+    },
+    {
+      "icon_id": "12548937",
+      "name": "资源管理",
+      "font_class": "ziyuanguanli",
+      "unicode": "e621",
+      "unicode_decimal": 58913
+    },
+    {
+      "icon_id": "2506205",
+      "name": "帖子管理",
+      "font_class": "tieziguanli",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    },
+    {
+      "icon_id": "24161347",
+      "name": "后台管理-积分管理",
+      "font_class": "houtaiguanli-jifenguanli",
+      "unicode": "e636",
+      "unicode_decimal": 58934
+    },
+    {
+      "icon_id": "11372717",
+      "name": "微信",
+      "font_class": "weixin",
+      "unicode": "e8bb",
+      "unicode_decimal": 59579
+    },
+    {
       "icon_id": "10091553",
       "name": "聊天",
       "font_class": "liaotian",

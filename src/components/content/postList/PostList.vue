@@ -5,7 +5,7 @@
         <!--帖子标题-->
         <div class="info">
           <div @click="itemClick(item)" >
-            <li><span class="title">{{item.title}}</span></li>
+            <li><span class="title" :class="{'active': item.isEssence}">{{item.title}}</span></li>
           </div>
           <span>{{item.likeCount}} 赞</span>
           <span>{{item.commentCount}} 回复</span>
@@ -93,8 +93,13 @@
   .list-item .lable a:hover {
     color: #409EFF;
   }
+
   .list-item .lable .create-time {
     color: #7B7E86;
     margin-left: 10px;
+  }
+
+  .active {
+    color: #409EFF!important;
   }
 </style>

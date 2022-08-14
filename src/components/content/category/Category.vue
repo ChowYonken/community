@@ -5,15 +5,10 @@
     <!--类别-->
     <div class="content">
       <ul>
-        <li>
-          <router-link to="/home">
-            <svg class="icon-font">
-              <use xlink:href="#icon-shouye1"></use>
-            </svg>
-            社区首页
-          </router-link>
+        <li v-for="(item, index) in topicList" @click="topicDetail(item.id)">
+          {{item.name}}
         </li>
-        <li>
+        <!-- <li>
           <router-link to="/topic">
             <svg class="icon-font">
               <use xlink:href="#icon-yingshi"></use>
@@ -44,15 +39,43 @@
             </svg>
             综艺圈
           </router-link>
-        </li>
+        </li> -->
       </ul>
     </div>
   </el-card>
 </template>
 
 <script>
+
+  import {getTopic} from "@/network/api/topic"
+
   export default {
-    name: "Category"
+    name: "Category",
+    data() {
+      return {
+        topicList: [] // 话题列表
+      }
+    },
+    created() {
+      this._getTopic()
+    },
+    methods: {
+      // 获取话题列表
+      _getTopic() {
+        getTopic()
+        .then(res => {
+          console.log(res);
+          this.topicList = res.data.data
+        })
+        .catch(err => {
+          console.log(err);
+        })
+      },
+      // 话题详情
+      topicDetail(topicId) {
+        this.$router.push('/topic/' + topicId)
+      }
+    }
   }
 </script>
 
@@ -64,7 +87,7 @@
   .category {
     flex: 0 0 216px;
     margin-right: 10px;
-    height: 290px;
+    min-height: 290px;
   }
 
   .category .title {
@@ -80,26 +103,25 @@
   }
 
   .content ul li {
-    /*margin: 20px 10px 0;*/
-    /*font-weight: 700;*/
     width: 214px;
     height: 40px;
     color: #2D3137;
     line-height: 40px;
+    padding-left: 80px;
   }
 
-  .content ul li a {
+  /* .content ul li a {
     display: inline-block;
     width: 100%;
     height: 100%;
-    padding-left: 20px;
-  }
+    padding-left: 45px;
+  } */
 
-  .content a {
+  .content li {
     background-color: #fff;
   }
 
-  .content a:hover {
+  .content li:hover {
     color: #409EFF;
     background-color: #ecf5ff;
   }
@@ -112,7 +134,7 @@
     vertical-align: -2px;
   }
 
-  /deep/ .el-card__body, .el-main {
+  div/deep/ .el-card__body, .el-main {
     padding: 0!important;
   }
 </style>

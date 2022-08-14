@@ -13,3 +13,11 @@ export function search(keyword, current, size, topicId, sort) {
     }
   })
 }
+
+// 获取24小时搜索热词
+export function getHotWord() {
+  return request({
+    url: '/data/hotWord',
+    method: 'get'
+  })
+}

@@ -88,18 +88,18 @@
           oldPwd: [
             { required: true, message: '请输入旧密码', trigger: 'blur' },
             {
-              min: 6,
+              min: 3,
               max: 20,
-              message: '长度在 6 到 20 个字符',
+              message: '长度在 3 到 20 个字符',
               trigger: 'blur'
             }
           ],
           newPwd: [
             { required: true, message: '请输入新密码', trigger: 'blur' },
             {
-              min: 6,
+              min: 3,
               max: 20,
-              message: '长度在 6 到 20 个字符',
+              message: '长度在 3 到 20 个字符',
               trigger: 'blur'
             }
           ],

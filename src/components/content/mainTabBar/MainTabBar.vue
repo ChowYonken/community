@@ -66,6 +66,7 @@
           <el-dropdown-menu slot="dropdown">
             <div @click="toUserPage"><el-dropdown-item><i class="iconfont icon-shouye"></i>个人主页</el-dropdown-item></div>
             <router-link to="/setup"><div><el-dropdown-item><i class="iconfont icon-rcd-setting-f"></i>账号设置</el-dropdown-item></div></router-link>
+            <div v-show="role === 'admin' || role === 'moderator'" @click="toAdmin"><el-dropdown-item><i class="iconfont icon-houtaiguanli-jifenguanli"></i>后台管理</el-dropdown-item></div>
             <div @click="logout"><el-dropdown-item ><i class="iconfont icon-tuichu"></i>退出</el-dropdown-item></div>
           </el-dropdown-menu>
         </el-dropdown>
@@ -80,6 +81,7 @@
   import {userInfo} from "@/network/api/userEdit";
   import {search} from "@/network/api/search"
   import {unRead} from "@/network/api/chat"
+  import {getRole} from "@/network/api/user"
 
   export default {
     name: "MainTabBar",
@@ -92,7 +94,8 @@
         default_img: require("@/assets/img/defaultImg.jpg"),
         dialogFormVisible: false,
         searchData: [], // 搜索内容
-        value: '' // 私信未读数量
+        value: '', // 私信未读数量
+        role: '', // 当前登录用户拥有的角色
       };
     },
     created() {
@@ -114,8 +117,8 @@
         this.$router.push('./login')
       },
       // 获取登录用户信息
-      getLoginInfo() {
-        userInfo()
+      async getLoginInfo() {
+        await userInfo()
         .then(res => {
           if(this.docUrl !== res.data.data.avatar) {
             this.docUrl = res.data.data.avatar
@@ -124,6 +127,17 @@
         })
         .catch(err => {
           console.log(err)
+        })
+        // 获取用户角色 
+        await getRole(this.id)
+        .then(res => {
+          this.$store.commit('SET_ROLE', res.data.data[0].name)
+          
+          this.role = res.data.data[0].name
+          localStorage.setItem('role', this.role)
+        })
+        .catch(err => {
+          console.log(err);
         })
       },
       // 退出登录
@@ -134,6 +148,7 @@
           // 退出登录，清空token
           this.$store.commit('removeToken');
           this.$router.push('/home');
+          localStorage.removeItem('role')
           this.$message({
             title: '成功',
             message: '成功退出登录',
@@ -185,6 +200,11 @@
       // 跳转个人主页
       toUserPage() {
         this.$router.push('/user/' + this.id)
+      },
+      // 跳转管理页面
+      toAdmin() {
+        this.$router.push('/postManage')
+        location.reload()
       }
     }
   }

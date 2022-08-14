@@ -15,9 +15,19 @@ const Search = () => import('@/views/search/Search')
 const SetUp = () => import('@/views/setup/SetUp')
 const UserInfo = () => import('@/views/setup/childComponent/UserInfo')
 const IdSet = () => import('@/views/setup/childComponent/IdSet')
-
+// 管理员和版主访问的页面
+const AdminPost = () => import('@/views/admin/AdminPage')
+const PostManage = () => import('@/views/admin/childComponent/PostManage')
+const BlockPost = () => import("@/views/admin/childComponent/BlockPost")
+const UserManage = () => import('@/views/admin/childComponent/UserManage')
+const RoleManage = () => import('@/views/admin/childComponent/RoleManage')
+const SourceManage = () => import('@/views/admin/childComponent/SourceManage')
+const TopicManage = () => import('@/views/admin/childComponent/TopicManage')
+const DataStats = () => import('@/views/admin/childComponent/DataStats')
+const ResourceList = () => import("@/views/admin/childComponent/ResourceList")
+ 
 Vue.use(Router)
-
+// 任何角色都可以访问的页面
 const routes = [
   // 重定向 初始页面是首页
   {
@@ -27,7 +37,7 @@ const routes = [
   // 社区首页
   {
     path: '/home',
-    component: CommunityPage
+    component: CommunityPage,
   },
   // 帖子详情页
   {
@@ -56,7 +66,7 @@ const routes = [
   },
   // 话题
   {
-    path: '/topic',
+    path: '/topic/:id',
     component: Topic
   },
   // 系统消息
@@ -92,10 +102,75 @@ const routes = [
   }
 ]
 
+// admin, moderator权限分配
+const token_routes = [
+  {
+    path: '/adminPost',
+    component: AdminPost,
+    meta: {role: 'admin'},
+    children: [
+      {
+        path: '/postManage',
+        component: PostManage
+      },
+      {
+        path: '/block',
+        component: BlockPost
+      },
+      {
+        path: '/userManage',
+        component: UserManage
+      },
+      {
+        path: '/roleManage',
+        component: RoleManage
+      },
+      {
+        path: '/sourceManage',
+        component: SourceManage
+      },
+      {
+        path: '/resourceList/:id',
+        component: ResourceList
+      },
+      {
+        path: '/topicManage',
+        component: TopicManage
+      },
+      // 数据统计页
+      {
+        path: '/dataStats',
+        component: DataStats
+      }
+    ]
+  },
+  {
+    path: '/adminPost',
+    component: AdminPost,
+    meta: {role: 'moderator'},
+    children: [
+      {
+        path: 'postManage',
+        component: PostManage
+      }
+    ]
+  }
+]
+
+
+// 动态把路由挂载上去
+let commonUser=[localStorage.getItem('role')]
+// let commonUser=['admin']
+let commonUserRoute = token_routes.filter(function(page) {
+  return commonUser.includes(page.meta.role)
+})
+
 const router = new Router({
   routes,
   mode: 'history'
 })
+
+router.addRoutes(commonUserRoute)
 
 
 // // 导航守卫

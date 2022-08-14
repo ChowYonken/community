@@ -9,14 +9,14 @@
         <el-button type="primary" plain @click="toPost">发表帖子</el-button>
       </div>
     </el-card>
-    <el-card class="hot-search">
+    <el-card class="hot-search" v-show="length > 8">
       <div class="hot-search-title">
         <span>热门搜索</span>
       </div>
       <ul>
-        <li class="hot-search-item" v-for="" @click="hotWordSearch">
-          <span class="hot-index">1</span>
-          <span class="hot-title">维金斯</span>
+        <li class="hot-search-item" @click="hotWordSearch(item)" v-for="(item, index) in hotWordList" :key="item">
+          <span class="hot-index">{{index + 1}}</span>
+          <span class="hot-title">{{item}}</span>
         </li>
       </ul>
     </el-card>
@@ -31,7 +31,9 @@
     name: "Create",
     data() {
       return {
-        isShowLogin: true // 判断登录注册是否显示
+        isShowLogin: true, // 判断登录注册是否显示
+        hotWordList: [], // 保存热词
+        length: null // 热词长度
       }
     },
     created() {
@@ -40,16 +42,33 @@
     methods: {
       // 获取24小时搜索热词
       _getHotWord() {
+        // 声明一个临时数组保存热词数组的值
+        let box = []
+        console.log(box);
         getHotWord()
         .then(res => {
           console.log(res);
+          if(box) {
+            box = []
+            box = res.data.data
+            console.log(box);
+            if (box.length > 8) {
+              // 只保存前8个
+              for (let i = 0; i < 8; i++) {
+                this.hotWordList.push(box[i])
+              }
+            } else {
+              this.hotWordList = box
+            }
+          }
+          this.length = res.data.data.length
         })
         .catch(err => {
           console.log(err);
         })
       }, 
-      hotWordSearch() {
-        this.$router.push('./search/' + this.keyword)
+      hotWordSearch(item) {
+        this.$router.push('./search/' + item)
       },
       // 跳转登录页面
       toLogin() {

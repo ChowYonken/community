@@ -209,11 +209,7 @@
   }
 
   .MsgList .text .text-content .text-content-post {
-    color: #409EFF
-  }
-
-  .MsgList .text .text-content .followBtn {
-
+    color: #409EFF;
   }
 
   div/deep/ .el-button--primary {

@@ -78,6 +78,7 @@
   .content {
     position: relative;
     flex: 0 0 708px;
+    height: 855px;
     margin-right: 10px;
   }
 
